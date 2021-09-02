@@ -18,9 +18,9 @@ public class Task12 implements ITask {
             System.out.println(helpString);
             return;
         }
+        
         try {
             int size = Integer.min(Integer.parseUnsignedInt(args[0]), sizeUpperLimit);
-            Boolean ascendingOrder = true;
             
             int[] array = new int[size];
             Random random = new Random();
