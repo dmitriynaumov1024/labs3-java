@@ -27,4 +27,16 @@ public class IntOperations {
             return number;
         }
     }
+    
+    public static long exponent2(int exp) throws Exception {
+        if(exp < 0 || exp > 62) {
+            throw new Exception("Exponent should be in 0...62 range.");
+        } else {
+            long result = 1;
+            for(int i=1; i<=exp; i++){
+                result *= 2;
+            }
+            return result;
+        }
+    }
 }

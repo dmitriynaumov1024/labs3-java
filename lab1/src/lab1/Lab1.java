@@ -1,5 +1,6 @@
 package lab1;
 
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 /**
@@ -23,10 +24,14 @@ public class Lab1 {
         Map<String, ITask> tasks = new HashMap<>();
         tasks.put("task1", new Task1());
         tasks.put("task2", new Task2());
+        tasks.put("task3", new Task3());
+        tasks.put("task4", new Task4());
         return tasks;
     }
     
     public static void main(String[] args) {
+        
+        Locale.setDefault(Locale.ENGLISH);
         
         Map<String, ITask> tasks = getTasks();
         

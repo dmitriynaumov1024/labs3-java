@@ -14,9 +14,9 @@ public class Task2 implements ITask {
         }
         
         try {
-            int num = Integer.parseInt(args[0]);
-            if (num < 0 || num > 16) {
-                System.out.println("Number must be in 0...16 range.");
+            long num = Long.parseLong(args[0]);
+            if (num < 0 || num > 20) {
+                System.out.println("Number must be in 0...20 range.");
             } else {
                 System.out.printf("%d! = %d \n", num, IntOperations.factorial(num));
             }
