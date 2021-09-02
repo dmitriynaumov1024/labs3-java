@@ -1,7 +1,5 @@
 package lab1;
 
-import java.util.Random;
-
 /**
  * Given array A(n), where n is in range 1...25. 
  * Write a method to swap min and max element of array.

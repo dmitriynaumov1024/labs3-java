@@ -1,7 +1,8 @@
 package lab1;
 
+import java.util.Arrays;
 import java.util.Random;
-
+import java.util.Comparator;
 /**
  * @author Dmitriy Naumov
  */
@@ -53,5 +54,35 @@ public class ArrayOperations {
     
     public static int[] getRandomizedArray(int size){
         return getRandomizedArray(size, Integer.MAX_VALUE);
+    }
+    
+    public static void sort(Integer[] array, Boolean ascendingOrder){
+        Arrays.sort(array, (ascendingOrder==true)? 
+                Comparator.naturalOrder() : 
+                Comparator.reverseOrder());
+    }
+    
+    public static int average(int[] array){
+        int sum = 0;
+        for(int i=0; i<array.length; i++){
+            sum += array[i];
+        }
+        return sum / array.length;
+    }
+    
+    public static int sumEven(int[] array){
+        int sum = 0;
+        for(int i=0; i<array.length; i++){
+            if(array[i]%2 == 0) sum += array[i];
+        }
+        return sum;
+    }
+    
+    public static int sumOdd(int[] array){
+        int sum = 0;
+        for(int i=0; i<array.length; i++){
+            if(array[i]%2 == 1) sum += array[i];
+        }
+        return sum;
     }
 }
