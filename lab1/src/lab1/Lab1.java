@@ -22,6 +22,7 @@ public class Lab1 {
     private static Map<String, ITask> getTasks(){
         Map<String, ITask> tasks = new HashMap<>();
         tasks.put("task1", new Task1());
+        tasks.put("task2", new Task2());
         return tasks;
     }
     

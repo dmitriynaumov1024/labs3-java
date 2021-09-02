@@ -1,7 +1,7 @@
 package lab1;
 
 /**
- * A task to calculate sum, difference, product and quotient of 2 numbers.
+ * A program to calculate sum, difference, product and quotient of 2 numbers.
  * Numbers are passed as string arguments.
  * Result will be printed to standard out.
  * @author Dmitriy Naumov
