@@ -1,6 +1,5 @@
 package lab1;
 
-import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 /**
@@ -26,6 +25,8 @@ public class Lab1 {
         tasks.put("task2", new Task2());
         tasks.put("task3", new Task3());
         tasks.put("task4", new Task4());
+        tasks.put("task5", new Task5());
+        tasks.put("task6", new Task6());
         return tasks;
     }
     

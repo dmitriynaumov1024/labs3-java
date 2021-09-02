@@ -28,4 +28,15 @@ public class ArrayOperations {
         array[indexMin] = temporaryMax;
         array[indexMax] = temporaryMin;
     }
+    
+    public static String arrayToString(int[] array){
+        if(array.length == 0){
+            return "{ }";
+        }
+        String result = "{ " + array[0];
+        for(int i=1; i<array.length; i++){
+            result += String.format(", %d", array[i]);
+        }
+        return result + " }";
+    }
 }
