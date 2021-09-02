@@ -39,4 +39,16 @@ public class IntOperations {
             return result;
         }
     }
+    
+    public static long ipow(long base, int exp) throws Exception {
+        if(exp < 0 || exp > 62) {
+            throw new Exception("Exponent should be in 0...62 range.");
+        } else {
+            long result = 1;
+            for(int i=1; i<=exp; i++){
+                result *= base;
+            }
+            return result;
+        }
+    }
 }

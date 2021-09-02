@@ -1,5 +1,7 @@
 package lab1;
 
+import java.util.Random;
+
 /**
  * @author Dmitriy Naumov
  */
@@ -38,5 +40,18 @@ public class ArrayOperations {
             result += String.format(", %d", array[i]);
         }
         return result + " }";
+    }
+    
+    public static int[] getRandomizedArray(int size, int bound){
+        int[] array = new int[size];
+        Random random = new Random();
+        for(int i=0; i<size; i++){
+            array[i] = random.nextInt(bound);
+        }
+        return array;
+    }
+    
+    public static int[] getRandomizedArray(int size){
+        return getRandomizedArray(size, Integer.MAX_VALUE);
     }
 }
