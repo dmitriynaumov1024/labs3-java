@@ -2,7 +2,7 @@ package lab1;
 
 /**
  * Write a program to check Ferma theorem a^n + b^n = c^n 
- * for numbers in range 1...100 and 2<n<10.
+ * for numbers in range 1...100 and 2&lt;n&lt;10.
  * @author Dmitriy Naumov
  */
 public class Task8 implements ITask {

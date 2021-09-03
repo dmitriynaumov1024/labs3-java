@@ -1,7 +1,7 @@
 package lab1;
 
 /**
- * Write a program to calculate factorial of a number n<10 using loop.
+ * Write a program to calculate factorial of a number n&lt;10 using loop.
  * @author Dmitriy Naumov
  */
 public class Task6 implements ITask {

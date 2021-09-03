@@ -2,7 +2,7 @@ package lab1;
 import java.util.Random;
 
 /**
- * Write a program to print a 3x5 table of random numbers of 0..<10 range.
+ * Write a program to print a 3x5 table of random numbers of 0..&lt;10 range.
  * @author Dmitriy Naumov
  */
 public class Task13 implements ITask {
