@@ -1,5 +1,11 @@
 # Lab 1
 
+### Usage
+
+1. Clone this repository.
+2. Build this project using Ant.
+3. Ensure you are in this directory (labs3-java/lab1) and execute ```java -jar dist/lab1.jar task<task number> [additional params]```
+
 ### Task list:
 
 1. Write a program to calculate sum, difference, product and quotient of 2 numbers passed as command line arguments. Result should be printed on console.
