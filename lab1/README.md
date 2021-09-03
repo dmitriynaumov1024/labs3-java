@@ -3,10 +3,13 @@
 ### Usage
 
 1. Clone this repository.
-2. Build this project using Ant.
-3. Ensure you are in this directory (labs3-java/lab1) and execute ```java -jar dist/lab1.jar task<task number> [additional params]```
+2. Ensure you are in this directory (labs3-java/lab1)
+3. Build this project using [Apache Ant](https://ant.apache.org/bindownload.cgi):
+   ```ant -noinput -buildfile build.xml ```
+4. Execute: 
+   ```java -jar dist/lab1.jar task<task number> [additional params] ```
 
-### Task list:
+### Task list
 
 1. Write a program to calculate sum, difference, product and quotient of 2 numbers passed as command line arguments. Result should be printed on console.
 2. Write a program to calculate factorial of a number passed as command line argument. Result should be printed on console.
