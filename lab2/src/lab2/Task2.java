@@ -2,7 +2,7 @@ package lab2;
 
 /**
  * Create an array and populate it with Fibonacci numbers.
- * @author Dima
+ * @author Dmitriy Naumov
  */
 public class Task2 implements ITask {
     
