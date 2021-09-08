@@ -16,6 +16,7 @@ public class Lab2 {
         tasks.put("task1", new Task1());
         tasks.put("task2", new Task2());
         tasks.put("task3", new Task3());
+        tasks.put("task4", new Task4());
         return tasks;
     }
     
