@@ -36,8 +36,56 @@ public class Sort {
      */
     public static int[] mergeSorted(int[] source){
         int length = source.length;
-        int[] result = source;
-        return result;
+        _mergeSort(source);
+        return source;
+    }
+    
+    static void _mergeSort(int[] array){
+        if (array.length < 2){
+            return;
+        } 
+        else if (array.length == 2){
+            if (array[0] > array[1]){
+                int temporary = array[0];
+                array[0] = array[1];
+                array[1] = temporary;
+            }
+        }
+        else {
+            int midIndex = array.length / 2;
+            
+            int[] leftHalf = Arrays.copyOfRange(array, 0, midIndex),
+                  rightHalf = Arrays.copyOfRange(array, midIndex, array.length);
+            
+            _mergeSort(leftHalf);
+            _mergeSort(rightHalf);
+            
+            int leftIter = 0,
+                rightIter = 0,
+                mainIter = 0;
+            
+            while(leftIter < leftHalf.length && rightIter < rightHalf.length){
+                int leftCurrent = leftHalf[leftIter], 
+                    rightCurrent = rightHalf[rightIter];
+                
+                if(leftCurrent < rightCurrent){
+                    array[mainIter++] = leftCurrent;
+                    ++leftIter;
+                }
+                else {
+                    array[mainIter++] = rightCurrent;
+                    ++rightIter;
+                }
+            }
+            
+            while(leftIter < leftHalf.length){
+                array[mainIter++] = leftHalf[leftIter++];
+            }
+            
+            while(rightIter < rightHalf.length){
+                array[mainIter++] = rightHalf[rightIter++];
+            }
+        }
     }
     
     /**
