@@ -1,7 +1,7 @@
 package lab2;
 
 /**
- *
+ * Contains method to transpose 2-dimensional array (a.k.a matrix)
  * @author Dmitriy Naumov
  */
 public class Transposer {
