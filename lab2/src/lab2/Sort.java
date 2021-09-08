@@ -96,8 +96,17 @@ public class Sort {
      */
     public static int[] bubbleSorted(int[] source){
         int length = source.length;
-        int[] result = source;
-        return result;
+        for(int i=0; i<length; i++){
+            int unsortedLength = length - i - 1;
+            for(int j=0; j<unsortedLength; j++){
+                if(source[j] > source[j+1]){
+                    int temporary = source[j+1];
+                    source[j+1] = source[j];
+                    source[j] = temporary;
+                }
+            }
+        }
+        return source;
     }
     
     /**
@@ -108,7 +117,7 @@ public class Sort {
      */
     public static int[] shakerSorted(int[] source){
         int length = source.length;
-        int[] result = source;
-        return result;
+        
+        return source;
     }
 }
