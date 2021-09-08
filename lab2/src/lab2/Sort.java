@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Contains methods to sort an array.
- * @author Dima
+ * @author Dmitriy Naumov
  */
 public class Sort {
     
