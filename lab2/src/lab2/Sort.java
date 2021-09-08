@@ -117,7 +117,30 @@ public class Sort {
      */
     public static int[] shakerSorted(int[] source){
         int length = source.length;
-        
+        Boolean swapHappened;
+        int start = 1, end = length;
+        do {
+            swapHappened = false;
+            int delta_i = 1;
+            // Trick with delta_i and turn-back can shorten the code.
+            for(int i=start; i>=start; i += delta_i){
+                if(i==end){
+                    if(swapHappened){
+                        delta_i = -1;
+                        continue;
+                    } 
+                    break;
+                } 
+                int left = source[i-1], right = source[i];
+                if (left > right){
+                    source[i] = left;
+                    source[i-1] = right;
+                    swapHappened = true;
+                }
+            }
+            ++start;
+            --end;
+        } while(swapHappened && start < end);
         return source;
     }
 }
