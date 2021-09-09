@@ -5,7 +5,7 @@
 1. Clone this repository.
 2. Ensure you are in this directory (labs3-java/lab2)
 3. Build this project using [Apache Ant](https://ant.apache.org/bindownload.cgi):
-   ```ant -noinput -buildfile build.xml ```
+   ```ant -noinput -buildfile build.xml compile```
 4. Execute: 
    ```java -jar dist/lab2.jar task<task number> [additional params] ```
 
