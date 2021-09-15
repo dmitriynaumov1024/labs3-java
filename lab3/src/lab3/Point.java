@@ -7,4 +7,6 @@ package lab3;
 public class Point {
     public double x;
     public double y;
+    
+    public static Point origin = new Point();
 }
