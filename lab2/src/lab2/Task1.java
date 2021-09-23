@@ -8,7 +8,10 @@ import java.util.Arrays;
  * @author Dmitriy Naumov
  */
 public class Task1 implements ITask {
-    String helpString = "Calculate scalar and vector product of two 3-dimensional vectors. \nUsage: <x1> <y1> <z1> <x2> <y2> <z2>";
+    String helpString = "Calculate scalar and vector product of two 3-dimensional vectors. \n"+
+                        "Usage: \n"+
+                        "  1) <x1> <y1> <z1> (1st vector lengths) <x2> <y2> <z2> (2nd vector lengths)\n"+
+                        "  2) <x y z> (start 1) <x y z> (end 1) <x y z> (start 2) <x y z> (end 2)";
     
     static double vector3dScalarProd(double[] v1, double[] v2) throws Exception {
         if (v1.length != 3 || v2.length != 3){
@@ -37,13 +40,24 @@ public class Task1 implements ITask {
         double[] vector1 = new double[3], 
                  vector2 = new double[3];
         
-        vector1[0] = Double.parseDouble(args[0]);
-        vector1[1] = Double.parseDouble(args[1]);
-        vector1[2] = Double.parseDouble(args[2]);
-        
-        vector2[0] = Double.parseDouble(args[3]);
-        vector2[1] = Double.parseDouble(args[4]);
-        vector2[2] = Double.parseDouble(args[5]);
+        if(args.length < 12){
+            vector1[0] = Double.parseDouble(args[0]);
+            vector1[1] = Double.parseDouble(args[1]);
+            vector1[2] = Double.parseDouble(args[2]);
+
+            vector2[0] = Double.parseDouble(args[3]);
+            vector2[1] = Double.parseDouble(args[4]);
+            vector2[2] = Double.parseDouble(args[5]);
+        } 
+        else {
+            vector1[0] = Double.parseDouble(args[3]) - Double.parseDouble(args[0]);
+            vector1[1] = Double.parseDouble(args[4]) - Double.parseDouble(args[1]);
+            vector1[2] = Double.parseDouble(args[5]) - Double.parseDouble(args[2]);
+            
+            vector2[0] = Double.parseDouble(args[9]) - Double.parseDouble(args[6]);
+            vector2[1] = Double.parseDouble(args[10])- Double.parseDouble(args[7]);
+            vector2[2] = Double.parseDouble(args[11])- Double.parseDouble(args[8]);
+        }
         
         try {
             double scalarProd12 = vector3dScalarProd(vector1, vector2);
@@ -51,8 +65,8 @@ public class Task1 implements ITask {
             double[] vectorProd12 = vector3dVectorProd(vector1, vector2);
             double[] vectorProd21 = vector3dVectorProd(vector2, vector1);
             
-            System.out.println("v1 = " + Arrays.toString(vector1));
-            System.out.println("v2 = " + Arrays.toString(vector2));
+            System.out.println("v1 lengths = " + Arrays.toString(vector1));
+            System.out.println("v2 lengths = " + Arrays.toString(vector2));
             System.out.println("[Scalar prod] v1 * v2 = " + scalarProd12);
             System.out.println("[Scalar prod] v2 * v1 = " + scalarProd21);
             System.out.println("[Vector prod] v1 x v2 = " + Arrays.toString(vectorProd12));
