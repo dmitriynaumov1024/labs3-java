@@ -14,4 +14,14 @@ public class Transposer {
         }
         return result;
     }
+    
+    public static void transposeInPlace (int[][] source){
+        for (int i=0; i<source.length; i++){
+            for(int j=0; j<i; j++){
+                int tmp = source[j][i];
+                source[j][i] = source[i][j];
+                source[i][j] = tmp;
+            }
+        }
+    }
 }

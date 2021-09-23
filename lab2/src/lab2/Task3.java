@@ -33,15 +33,15 @@ public class Task3 implements ITask {
         
         int[][] matrix = randomArray2d(size, size, 0, size * 2);
         
-        int[][] transposedMatrix = Transposer.transpose(matrix);
-        
         System.out.println("Matrix:");
         for (int[] row : matrix){
             System.out.println(Arrays.toString(row));
         }
         
+        Transposer.transposeInPlace(matrix);
+        
         System.out.println("Transposed matrix:");
-        for (int[] row : transposedMatrix){
+        for (int[] row : matrix){
             System.out.println(Arrays.toString(row));
         }
     }
