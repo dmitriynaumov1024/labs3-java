@@ -1,9 +1,5 @@
 package mathdemo;
 
-/**
- *
- * @author Dmitriy Naumov
- */
 public class MyMath {
 
     static double L = Math.PI;
@@ -92,4 +88,57 @@ public class MyMath {
         return initial + result * 2.0;
     }
     
+    // 2. Cbrt(x) - cubic root of x
+    static double Cbrt(double x){
+        double sign = 1.0;
+        boolean reverse = false;
+        
+        if (x < 0){
+            x = -x;
+            sign = -1.0;
+        }
+        
+        if (x < 1){
+            x = 1/x;
+            reverse = true;
+        }
+        
+        double left = 0, right = x;
+        double epsilon = x / 1.0E+16;
+        
+        while (left + epsilon < right)
+        {
+            double mid = (left + right) / 2.0;
+            if(mid * mid * mid > x)
+                right = mid;
+            else 
+                left = mid;
+        }
+        
+        double result = sign * (left + right) / 2.0;
+        return reverse ? 1.0/result : result;
+    }
+    
+    // 3. Hell(x) - what???
+    static int Hell(int x){
+        if(x < 0) x = -x;
+        
+        int iterationCount = 0;
+        
+        while(x > 1)
+        {
+            if (x%2==0){
+                x = x / 2;
+            }
+            else {
+                x = 3*x + 1;
+            }
+            
+            ++iterationCount;
+        }
+        
+        return iterationCount;
+    }
+    
+
 }
