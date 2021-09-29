@@ -11,7 +11,7 @@ public class VehicleDemo {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         
         Locale.setDefault(Locale.ENGLISH);
         
@@ -29,6 +29,18 @@ public class VehicleDemo {
         
         System.out.printf("My car's power       : %.1f hp \n", myCar.get_power());
         System.out.printf("My car's engine type : %s \n", myCar.get_engineType().toString());
+        
+        System.out.printf("How's my car doing? I'll check if it's safe. \n");
+        
+        myCar.set_currentSpeed(48.0);
+        
+        double speed = myCar.get_currentSpeed();
+        if(speed==0){
+            System.out.printf("My car is staying still with %.1f km/h speed \n", myCar.get_currentSpeed());
+        }
+        else {
+            System.out.printf("Oh god! My car is stolen and is currently going with %.1f km/h speed! \n", myCar.get_currentSpeed());
+        }
         
     }
     
