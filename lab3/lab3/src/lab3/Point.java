@@ -9,4 +9,11 @@ public class Point {
     public double y;
     
     public static Point origin = new Point();
+    
+    public double distance(Point that){
+        double dx = that.x - this.x,
+               dy = that.y - this.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+            
 }
