@@ -1,9 +1,11 @@
 package mathdemo;
 
 public class MyMath {
-
-    static double L = Math.PI;
-
+    
+    static final double E  = 2.7182818284590452354;
+    static final double PI = 3.14159265358979323846;
+    static final double L  = PI;
+    
     static double Exp(double x, int N) {
         int i;
         double s = 0, q = 1;
@@ -48,7 +50,7 @@ public class MyMath {
         int i, N = a.length;
         double s = 0;
         for (i = 0; i < N; i++) {
-            s += a[i] * Math.sin(Math.PI * x * (i + 1) / L);
+            s += a[i] * Sin(PI * x * (i + 1) / L, 100);
         }
         return s;
     }
@@ -57,7 +59,7 @@ public class MyMath {
         int i, N = a.length;
         double s = 0;
         for (i = 0; i < N; i++) {
-            s += a[i] * Math.cos(Math.PI * x * i / L);
+            s += a[i] * Sin(PI * x * i / L, 100);
         }
         return s;
     }
@@ -70,8 +72,8 @@ public class MyMath {
         if(x == 0) return Double.NEGATIVE_INFINITY;
         
         double initial = 0.0;
-        while (x > Math.E){
-            x /= Math.E;
+        while (x > E){
+            x /= E;
             initial += 1.0;
         }
         
