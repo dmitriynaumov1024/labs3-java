@@ -37,6 +37,9 @@ public class MathDemo {
         System.out.printf("Ln(1/E) = %f \n", MyMath.Ln(1.0/Math.E));
         
         // Cbrt(x) demo
+        System.out.printf("Cbrt(%f) = %f \n", 0.0, MyMath.Cbrt(0.0));
+        System.out.printf("Cbrt(%f) = %f \n", -8.0, MyMath.Cbrt(-8.0));
+        System.out.printf("Cbrt(%f) = %f \n", -1.0/8.0, MyMath.Cbrt(-1.0/8.0));
         System.out.printf("Cbrt(%f) = %f \n", 1000.0, MyMath.Cbrt(1000.0));
         System.out.printf("Cbrt(%f) = %f \n", 76893.56, MyMath.Cbrt(76893.56));
         
