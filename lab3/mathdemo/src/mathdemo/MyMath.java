@@ -95,6 +95,10 @@ public class MyMath {
         double sign = 1.0;
         boolean reverse = false;
         
+        if (x==0.0){
+            return 0.0;
+        }
+        
         if (x < 0){
             x = -x;
             sign = -1.0;
@@ -142,5 +146,4 @@ public class MyMath {
         return iterationCount;
     }
     
-
 }
