@@ -1,5 +1,6 @@
 package linkedlistdemo;
 
+import java.util.HashSet;
 import java.util.Iterator;
 
 /**
@@ -202,22 +203,81 @@ public class LinkedList<T> implements Iterable<T> {
     // Returns true if an element was found and removed.
     public boolean removeFirstByValue(T val) {
         LinkedListNode<T> node = findNextByValue(val, this.root);
-        if (node == null){
+        if(node == null){
             return false;
         }
-        if (node == this.root){
-            this.root = this.root.next;
-        }
-        else if (node == this.end){
-            this.end = this.getNode(this.count - 2);
-            this.end.next = null;
-        }
         else {
-            node.value = node.next.value;
-            node.next = node.next.next;
+            if (node == this.root){
+                this.root = this.root.next;
+            }
+            else if (node == this.end){
+                this.end = this.getNode(this.count - 2);
+                this.end.next = null;
+            }
+            else {
+                if(node.next == this.end){
+                    this.end = node;
+                }
+                node.value = node.next.value;
+                node.next = node.next.next;
+            }
+            this.count--;
+            return true;
         }
-        this.count--;
-        return true;
+    }
+    
+    // Remove all occurences of given value
+    // Returns number of removed elements
+    public int removeAllByValue(T val){
+        int removalCount = 0;
+        for(LinkedListNode<T> node = findNextByValue(val, this.root); 
+            node != null; 
+            node = findNextByValue(val, node)) 
+        {
+            this.count--;
+            removalCount++;
+            if (node == this.root){
+                this.root = this.root.next;
+            }
+            else if (node == this.end){
+                this.end = this.getNode(this.count - 1);
+                this.end.next = null;
+                break;
+            }
+            else {
+                if(node.next == this.end){
+                    this.end = node;
+                }
+                node.value = node.next.value;
+                node.next = node.next.next;
+            }
+        } 
+        return removalCount;
+    }
+    
+    // Remove all occurences of given values
+    public int removeAllByValue(Iterable<T> values){
+        int removalCount = 0;
+        HashSet<T> usedValues = new HashSet<T>();
+        for(T value : values){
+            if(!usedValues.contains(value)){
+                removalCount += this.removeAllByValue(value);
+                usedValues.add(value);
+            }
+        }
+        return removalCount;
+    }
+    
+    public int removeAllByValue(T[] values){
+        int removalCount = 0;
+        HashSet<T> usedValues = new HashSet<T>();
+        for(T value : values){
+            if(!usedValues.contains(value)){
+                removalCount += this.removeAllByValue(value);
+                usedValues.add(value);
+            }
+        }
+        return removalCount;
     }
     
     public int count(){
@@ -233,7 +293,13 @@ public class LinkedList<T> implements Iterable<T> {
     }
     
     private LinkedListNode<T> findNextByValue(T val, LinkedListNode<T> startNode){
-        for (LinkedListNode<T> current = startNode; current != null; current = current.next){
+        if(startNode == null){ 
+            return null;
+        }
+        for(LinkedListNode<T> current = startNode; 
+            current != null; 
+            current = current.next)
+        {
             if (current.value.equals(val)){ 
                 return current;
             }
@@ -243,7 +309,10 @@ public class LinkedList<T> implements Iterable<T> {
     
     @Override public String toString(){
         LinkedList<String> stringRepresentations = new LinkedList<>();
-        for(LinkedListNode<T> current = this.root; current != null; current = current.next){
+        for(LinkedListNode<T> current = this.root; 
+            current != null; 
+            current = current.next)
+        {
             stringRepresentations.append(current.value.toString());
         }
         return String.format("[%s]", String.join(", ", stringRepresentations));
