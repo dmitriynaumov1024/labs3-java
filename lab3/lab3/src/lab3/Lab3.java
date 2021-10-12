@@ -21,10 +21,10 @@ public class Lab3 {
         lowerLeft.x = 0.0;
         lowerLeft.y = 0.0;
         
-        upperRight.x = 1280.0;
+        upperRight.x = 1000.0;
         upperRight.y = 1024.0;
         
-        middlePoint.x = 640.0;
+        middlePoint.x = 1000.0;
         middlePoint.y = 512.0;
         
         System.out.printf("lowerLeft   : (%.3f, %.3f) \n", 
