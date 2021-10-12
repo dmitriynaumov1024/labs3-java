@@ -43,11 +43,10 @@ public class Program {
         list.append(246);
         System.out.println(list.toString());
         
-        list.removeAllByValue(new Integer[]{4, 246});
-        System.out.println(list.toString());
+        int removalCount = list.removeAllByValue(new Integer[]{4, 246, 4444});
+        System.out.printf("%s (Removed %d elements). \n", list.toString(), removalCount);
         
         list.append(247);
-        System.out.println(list.toString());
-        System.out.printf("List contains %d items now. \n", list.count());
+        System.out.printf("%s (List contains %d items now). \n", list.toString(), list.count());
     }
 }
