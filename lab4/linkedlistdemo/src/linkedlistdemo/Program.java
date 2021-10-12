@@ -29,6 +29,10 @@ public class Program {
         }
         
         System.out.println(list.toString());
+        
+        list.removeFirstByValue(2147);
+        System.out.println(list.toString());
+        list.append(244);
+        System.out.println(list.toString());
     }
-    
 }

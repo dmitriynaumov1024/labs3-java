@@ -10,7 +10,7 @@ public class LinkedList<T> implements Iterable<T> {
     
     class LinkedListNode<T> {
         public T value;
-        public LinkedListNode next;
+        public LinkedListNode<T> next;
     }
     
     class LinkedListIterator<T> implements Iterator<T> {
@@ -58,11 +58,7 @@ public class LinkedList<T> implements Iterable<T> {
         if(index < 0 || index >= this.count){
             throw new Exception("index is out of range.");
         }
-        LinkedListNode<T> current = this.root;
-        for(int i=0; i<index; i++){
-            current = current.next;
-        }
-        return current.value;
+        return this.getNode(index).value;
     }
     
     // Set item
@@ -150,7 +146,8 @@ public class LinkedList<T> implements Iterable<T> {
         }
         if(index == this.count){
             this.append(vals);
-        } else {
+        } 
+        else {
             LinkedListNode<T> insertionNode = this.getNode(index);
             LinkedListNode<T> prevNode = null;
             LinkedListNode<T> insertionNodeReplacement = new LinkedListNode<>();
@@ -168,16 +165,80 @@ public class LinkedList<T> implements Iterable<T> {
         }
     }
     
+    // Remove at index
+    public void removeAt(int index) throws Exception {
+        if (index < 0 || index>=this.count) {
+            throw new Exception("index is out of range.");
+        }
+        if (index == 0){
+            this.root = this.root.next;
+        }
+        else {
+            LinkedListNode<T> previousNode = this.getNode(index-1);
+            previousNode.next = (previousNode.next == null) ? null : previousNode.next.next;
+        }
+        this.count--;
+    }
+    
+    // Remove after index
+    public void removeAfter(int index) throws Exception {
+        if (index < 0 || index>=this.count) {
+            throw new Exception("index is out of range.");
+        }
+        this.getNode(index).next = null;
+        this.count = index + 1;
+    }
+    
+    // Remove before index
+    public void removeBefore(int index) throws Exception {
+        if (index < 0 || index>=this.count) {
+            throw new Exception("index is out of range.");
+        }
+        this.root = this.getNode(index);
+        this.count -= index;
+    }
+    
+    // Remove first occurence of given value.
+    // Returns true if an element was found and removed.
+    public boolean removeFirstByValue(T val) {
+        LinkedListNode<T> node = findNextByValue(val, this.root);
+        if (node == null){
+            return false;
+        }
+        if (node == this.root){
+            this.root = this.root.next;
+        }
+        else if (node == this.end){
+            this.end = this.getNode(this.count - 2);
+            this.end.next = null;
+        }
+        else {
+            node.value = node.next.value;
+            node.next = node.next.next;
+        }
+        this.count--;
+        return true;
+    }
+    
     public int count(){
         return this.count;
     }
     
-    private LinkedListNode getNode(int index){
+    private LinkedListNode<T> getNode(int index){
         LinkedListNode<T> current = this.root;
         for(int i=0; i<index; i++){
             current = current.next;
         }
         return current;
+    }
+    
+    private LinkedListNode<T> findNextByValue(T val, LinkedListNode<T> startNode){
+        for (LinkedListNode<T> current = startNode; current != null; current = current.next){
+            if (current.value.equals(val)){ 
+                return current;
+            }
+        }
+        return null;
     }
     
     @Override public String toString(){
@@ -189,6 +250,6 @@ public class LinkedList<T> implements Iterable<T> {
     }
     
     @Override public Iterator<T> iterator() {
-        return new LinkedListIterator<T>(this);
+        return new LinkedListIterator<>(this);
     }
 }
