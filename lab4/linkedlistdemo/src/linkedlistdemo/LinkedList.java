@@ -1,5 +1,6 @@
 package linkedlistdemo;
 
+import java.lang.reflect.Array;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.function.BiPredicate;
@@ -347,6 +348,19 @@ public class LinkedList<T> implements Iterable<T> {
             node = node.next, startIndex++)
         {
             result.append(node.value);
+        }
+        return result;
+    }
+    
+    // Convert this list to array
+    public Object[] toArray(){
+        Object[] result = new Object[this.count];
+        int index = 0;
+        LinkedListNode<T> node = this.root;
+        while(node != null && index < this.count){
+            result[index] = node.value;
+            ++index;
+            node = node.next;
         }
         return result;
     }

@@ -1,5 +1,7 @@
 package linkedlistdemo;
 
+import java.util.Arrays;
+
 /**
  * Linked List Demo.
  * @author Dmitriy Naumov
@@ -71,10 +73,16 @@ public class Program {
             System.out.printf("%s (Selected items from newlist with index in range [0..2)). \n", newlist.toString());
             
             newlist = list.slice(8, 24);
-            System.out.printf("%s (Selected items srom list with index in range [8..24)). \n", newlist.toString());
+            System.out.printf("%s (Selected items from list with index in range [8..24)). \n", newlist.toString());
         } 
         catch (Exception ex){
             return;
         }
+        
+        newlist = list.filter((index, value) -> (index % 2 == 0 && value > 1));
+        System.out.printf("%s (Selected items from list with even index and value > 1). \n", newlist.toString());
+        
+        Object[] array = newlist.toArray();
+        System.out.printf("%s (last list converted to array). \n", Arrays.toString(array));
     }
 }
