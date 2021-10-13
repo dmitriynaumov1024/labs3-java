@@ -48,5 +48,17 @@ public class Program {
         
         list.append(247);
         System.out.printf("%s (List contains %d items now). \n", list.toString(), list.count());
+        
+        try {
+            list.removeAt(list.count()-1);
+            System.out.printf("%s (Removed last item). \n", list.toString());
+        }
+        catch (Exception ex){
+            return;
+        }
+        
+        list.append(32);
+        System.out.printf("%s (Added 1 item). \n", list.toString());
+        
     }
 }

@@ -135,8 +135,9 @@ public class LinkedList<T> implements Iterable<T> {
                 prevNode = insertionNode;
                 insertionNode = insertionNode.next;
             }
-            if(prevNode!=null) 
+            if(prevNode!=null){
                 prevNode.next = insertionNodeReplacement;
+            }
             this.count += vals.length;
         }
     }
@@ -161,8 +162,9 @@ public class LinkedList<T> implements Iterable<T> {
                 insertionNode = insertionNode.next;
                 this.count++;
             }
-            if(prevNode!=null) 
+            if(prevNode!=null){
                 prevNode.next = insertionNodeReplacement;
+            }
         }
     }
     
@@ -171,12 +173,20 @@ public class LinkedList<T> implements Iterable<T> {
         if (index < 0 || index>=this.count) {
             throw new Exception("index is out of range.");
         }
-        if (index == 0){
+        LinkedListNode<T> node = this.getNode(index);
+        if (node == this.root){
             this.root = this.root.next;
         }
+        else if (node == this.end){
+            this.end = this.getNode(this.count - 2);
+            this.end.next = null;
+        }
         else {
-            LinkedListNode<T> previousNode = this.getNode(index-1);
-            previousNode.next = (previousNode.next == null) ? null : previousNode.next.next;
+            if(node.next == this.end){
+                this.end = node;
+            }
+            node.value = node.next.value;
+            node.next = node.next.next;
         }
         this.count--;
     }
@@ -186,7 +196,8 @@ public class LinkedList<T> implements Iterable<T> {
         if (index < 0 || index>=this.count) {
             throw new Exception("index is out of range.");
         }
-        this.getNode(index).next = null;
+        this.end = this.getNode(index);
+        this.end.next = null;
         this.count = index + 1;
     }
     
@@ -256,6 +267,7 @@ public class LinkedList<T> implements Iterable<T> {
     }
     
     // Remove all occurences of given values
+    // Returns number of removed elements
     public int removeAllByValue(Iterable<T> values){
         int removalCount = 0;
         HashSet<T> usedValues = new HashSet<T>();
@@ -268,6 +280,8 @@ public class LinkedList<T> implements Iterable<T> {
         return removalCount;
     }
     
+    // Remove all occurences of given values
+    // Returns number of removed elements
     public int removeAllByValue(T[] values){
         int removalCount = 0;
         HashSet<T> usedValues = new HashSet<T>();
@@ -322,3 +336,7 @@ public class LinkedList<T> implements Iterable<T> {
         return new LinkedListIterator<>(this);
     }
 }
+
+//class EndOfListWarning extends Exception {
+//    
+//}
