@@ -2,6 +2,7 @@ package linkedlistdemo;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 /**
@@ -301,13 +302,28 @@ public class LinkedList<T> implements Iterable<T> {
     }
     
     // Return a new list with items from this list which meet given condition
-    public LinkedList<T> filter(Predicate<T> condition){
+    public LinkedList<T> filter(Predicate<T> valueCondition){
         LinkedList<T> result = new LinkedList<>();
         for(LinkedListNode<T> current = this.root; 
             current != null; 
             current = current.next)
         {
-            if (condition.test(current.value)) result.append(current.value);
+            if (valueCondition.test(current.value)) result.append(current.value);
+        }
+        return result;
+    }
+    
+    // Return a new list with items from this list filtered by value and index
+    public LinkedList<T> filter(BiPredicate<Integer, T> indexValueCondition){
+        LinkedList<T> result = new LinkedList<>();
+        int index = 0;
+        LinkedListNode<T> node = this.root;
+        while(node != null && index < this.count){
+            if (indexValueCondition.test(index, node.value)){
+                result.append(node.value);
+            }
+            node = node.next;
+            ++index;
         }
         return result;
     }

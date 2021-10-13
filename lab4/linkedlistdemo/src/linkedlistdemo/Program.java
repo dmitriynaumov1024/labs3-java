@@ -68,7 +68,10 @@ public class Program {
         
         try {
             newlist = newlist.slice(0, 2);
-            System.out.printf("%s (Selected items with index in range [0..2)). \n", newlist.toString());
+            System.out.printf("%s (Selected items from newlist with index in range [0..2)). \n", newlist.toString());
+            
+            newlist = list.slice(8, 24);
+            System.out.printf("%s (Selected items srom list with index in range [8..24)). \n", newlist.toString());
         } 
         catch (Exception ex){
             return;
