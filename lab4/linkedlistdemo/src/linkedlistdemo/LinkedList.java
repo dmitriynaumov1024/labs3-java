@@ -302,6 +302,18 @@ public class LinkedList<T> implements Iterable<T> {
         return this.count;
     }
     
+    // Number of items that meet given condition
+    public int count(Predicate<T> valueCondition){
+        int result = 0;
+        for(LinkedListNode<T> current = this.root; 
+            current != null; 
+            current = current.next)
+        {
+            if (valueCondition.test(current.value)) result++;
+        }
+        return result;
+    }
+    
     // Return a new list with items from this list which meet given condition
     public LinkedList<T> filter(Predicate<T> valueCondition){
         LinkedList<T> result = new LinkedList<>();
