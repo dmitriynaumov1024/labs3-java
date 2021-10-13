@@ -84,5 +84,28 @@ public class Program {
         
         Object[] array = newlist.toArray();
         System.out.printf("%s (last list converted to array). \n", Arrays.toString(array));
+        
+        newlist.clear();
+        System.out.printf("%s (list was cleared) \n", newlist.toString());
+        
+        newlist.append(new Integer[]{1, 2, 3, 4, 5});
+        
+        System.out.printf("%s (added 1, 2, 3, 4, 5) \n", newlist.toString());
+        System.out.printf("Integrity check: %b \n", newlist.checkIntegrity());
+        
+        LinkedList<Integer> newlistDescSorted = newlist.sorted((left, right)->(left > right));
+        System.out.printf("%s (sorted descending order) \n", newlistDescSorted.toString());
+        
+        System.out.printf("%s (list again to ensure everything is all right) \n", newlist.toString());
+        
+        Integer[] lastExample = { 4, 5, 6, 7, 8, 0, 99, 73, -10, 20, 33, 43, 34, 33, 22, 23 };
+        LinkedList<Integer> lastExampleList = new LinkedList<>(lastExample);
+        System.out.printf("%s (last example) \n", lastExampleList);
+        
+        System.out.printf("%s (last example sorted ascending and filtered divisible by 3) \n", 
+                          lastExampleList
+                              .sorted((left, right)->(left < right))
+                              .filter((item)->(item % 3 == 0))
+        );
     }
 }

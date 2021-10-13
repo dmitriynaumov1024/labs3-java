@@ -397,6 +397,58 @@ public class LinkedList<T> implements Iterable<T> {
         this.end = null;
     }
     
+    // Return sorted copy of list.
+    // This method MergeSort under the hood.
+    public LinkedList<T> sorted(BiPredicate<T, T> sortPredicate){
+        return mergeSortRecursive(this, sortPredicate);
+    }
+    
+    private LinkedList<T> mergeSortRecursive(LinkedList<T> list, BiPredicate<T, T> sortPredicate){
+        if (list.count < 2){
+            return list;
+        }
+        else if (list.count == 2){
+            if (!sortPredicate.test(list.root.value, list.end.value)) {
+                LinkedList<T> result = new LinkedList<>();
+                result.append(list.end.value);
+                result.append(list.root.value);
+                return result;
+            }
+            return list;
+        }
+        else {
+            int middleIndex = list.count / 2;
+            try {
+                LinkedList<T> left = mergeSortRecursive(list.slice(0, middleIndex), sortPredicate),
+                              right = mergeSortRecursive(list.slice(middleIndex, list.count), sortPredicate);
+                return mergeNodeChains(left.root, right.root, sortPredicate);
+            } 
+            catch (Exception ex){
+                return list;
+            }
+        }
+    }
+    
+    private LinkedList<T> mergeNodeChains(LinkedListNode<T> root1, LinkedListNode<T> root2, BiPredicate<T, T> sortPredicate){
+        LinkedList<T> result = new LinkedList<>();
+        while (root1 != null && root2 != null){
+            if (sortPredicate.test(root1.value, root2.value)){
+                result.append(root1.value);
+                root1 = root1.next;
+            }
+            else {
+                result.append(root2.value);
+                root2 = root2.next;
+            }
+        }
+        LinkedListNode<T> rootRemains = (root1 != null) ? root1 : root2;
+        while(rootRemains != null){
+            result.append(rootRemains.value);
+            rootRemains = rootRemains.next;
+        }
+        return result;
+    }
+    
     private LinkedListNode<T> getNode(int index){
         LinkedListNode<T> current = this.root;
         for(int i=0; i<index; i++){
