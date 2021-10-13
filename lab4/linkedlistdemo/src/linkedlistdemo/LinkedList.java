@@ -377,6 +377,26 @@ public class LinkedList<T> implements Iterable<T> {
         return result;
     }
     
+    // Check this list's integrity
+    public boolean checkIntegrity(){
+        for(LinkedListNode<T> current = this.root; 
+            current != null; 
+            current = current.next)
+        {
+            if (current == this.end){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Clear this list
+    public void clear(){
+        this.count = 0;
+        this.root = null;
+        this.end = null;
+    }
+    
     private LinkedListNode<T> getNode(int index){
         LinkedListNode<T> current = this.root;
         for(int i=0; i<index; i++){
