@@ -2,6 +2,7 @@ package linkedlistdemo;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 /**
  * @author Dmitriy Naumov
@@ -294,8 +295,44 @@ public class LinkedList<T> implements Iterable<T> {
         return removalCount;
     }
     
+    // Number of items in this LinkedList
     public int count(){
         return this.count;
+    }
+    
+    // Return a new list with items from this list which meet given condition
+    public LinkedList<T> filter(Predicate<T> condition){
+        LinkedList<T> result = new LinkedList<>();
+        for(LinkedListNode<T> current = this.root; 
+            current != null; 
+            current = current.next)
+        {
+            if (condition.test(current.value)) result.append(current.value);
+        }
+        return result;
+    }
+    
+    // Return new LinkedList with items in given position range, end index is exclusive
+    public LinkedList<T> slice(int startIndex, int endIndex) throws Exception {
+        if(endIndex < startIndex){
+            throw new Exception("End index must not be lower than start index.");
+        }
+        if(startIndex < 0){
+            startIndex = 0;
+        }
+        if(endIndex > this.count){
+            endIndex = this.count;
+        }
+        
+        LinkedList<T> result = new LinkedList<>();
+        
+        for(LinkedListNode<T> node = this.getNode(startIndex); 
+            node!=null && startIndex < endIndex; 
+            node = node.next, startIndex++)
+        {
+            result.append(node.value);
+        }
+        return result;
     }
     
     private LinkedListNode<T> getNode(int index){
@@ -336,7 +373,3 @@ public class LinkedList<T> implements Iterable<T> {
         return new LinkedListIterator<>(this);
     }
 }
-
-//class EndOfListWarning extends Exception {
-//    
-//}

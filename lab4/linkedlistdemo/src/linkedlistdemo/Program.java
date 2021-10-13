@@ -60,5 +60,18 @@ public class Program {
         list.append(32);
         System.out.printf("%s (Added 1 item). \n", list.toString());
         
+        LinkedList<Integer> newlist = list.filter(x -> (x > 0));
+        System.out.printf("%s (Selected items with condition x -> (x > 0)). \n", newlist.toString());
+        
+        newlist = list.filter(x -> (x < 0));
+        System.out.printf("%s (Selected items with condition x -> (x < 0)). \n", newlist.toString());
+        
+        try {
+            newlist = newlist.slice(0, 2);
+            System.out.printf("%s (Selected items with index in range [0..2)). \n", newlist.toString());
+        } 
+        catch (Exception ex){
+            return;
+        }
     }
 }
