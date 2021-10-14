@@ -21,9 +21,13 @@ public class Program {
         try { 
             list.insert(1, 1); 
             list.insert(0, 9);
+            System.out.printf("%s - list \n", list);
             list.insert(1, new Integer[]{-99, -98, -97});
+            System.out.printf("%s (inserted {-99, -98, -97} into index 1) \n", list);
             list.append(childList);
+            System.out.printf("%s (appended %s) \n", list, childList);
             list.insert(list.count(), 2147);
+            System.out.printf("%s (appended 2147) \n", list);
             list.append(new Integer[]{});
             list.insert(4, new Integer[]{});
         }
@@ -31,20 +35,18 @@ public class Program {
             return; 
         }
         
-        System.out.println(list.toString());
-        
         list.removeFirstByValue(2147);
-        System.out.println(list.toString());
+        System.out.printf("%s (removed first by value 2147) \n", list);
         
         list.append(244);
         list.append(245);
-        System.out.println(list.toString());
+        System.out.printf("%s (appended 244, 245) \n", list);
         
         list.removeAllByValue(244);
-        System.out.println(list.toString());
+        System.out.printf("%s (removed all by value 244) \n", list);
         
         list.append(246);
-        System.out.println(list.toString());
+        System.out.printf("%s (appended 246) \n", list.toString());
         
         int removalCount = list.removeAllByValue(new Integer[]{4, 246, 4444});
         System.out.printf("%s (Removed %d elements). \n", list.toString(), removalCount);
@@ -55,13 +57,17 @@ public class Program {
         try {
             list.removeAt(list.count()-1);
             System.out.printf("%s (Removed last item). \n", list.toString());
+            list.removeAt(2999);
         }
         catch (Exception ex){
-            return;
+            System.out.printf("Exception: %s \n", ex.getMessage());
+        }
+        finally {
+            System.out.printf("%s (tried to remove at index 2999). \n", list.toString());
         }
         
         list.append(32);
-        System.out.printf("%s (Added 1 item). \n", list.toString());
+        System.out.printf("%s (appended 32). \n", list.toString());
         
         LinkedList<Integer> newlist = list.filter(x -> (x > 0));
         System.out.printf("%s (Selected items with condition x -> (x > 0)). \n", newlist.toString());
@@ -74,7 +80,7 @@ public class Program {
             System.out.printf("%s (Selected items from newlist with index in range [0..2)). \n", newlist.toString());
             
             newlist = list.slice(8, 24);
-            System.out.printf("%s (Selected items from list with index in range [8..24)). \n", newlist.toString());
+            System.out.printf("%s (tried to select items from list with index in range [8..24)). \n", newlist.toString());
         } 
         catch (Exception ex){
             return;
@@ -94,7 +100,7 @@ public class Program {
         System.out.printf("%s (added 1, 2, 3, 4, 5) \n", newlist.toString());
         System.out.printf("Integrity check: %b \n", newlist.checkIntegrity());
         
-        LinkedList<Integer> newlistDescSorted = newlist.sorted((left, right)->(left > right));
+        LinkedList<Integer> newlistDescSorted = newlist.sorted(Comparator.<Integer>reverseOrder());
         System.out.printf("%s (sorted descending order) \n", newlistDescSorted.toString());
         
         System.out.printf("%s (list again to ensure everything is all right) \n", newlist.toString());
@@ -105,7 +111,7 @@ public class Program {
         
         System.out.printf("%s (last example sorted ascending and filtered divisible by 3) \n", 
                           lastExampleList
-                              .sorted((left, right)->(left < right))
+                              .sorted(Comparator.<Integer>naturalOrder())
                               .filter((item)->(item % 3 == 0))
         );
         

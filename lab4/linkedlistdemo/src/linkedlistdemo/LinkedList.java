@@ -403,17 +403,17 @@ public class LinkedList<T> implements Iterable<T> {
     
     // Return sorted copy of list.
     // This method MergeSort under the hood.
-    public LinkedList<T> sorted(BiPredicate<T, T> sortPredicate){
-        return mergeSortRecursive(new LinkedList<>(this), new LinkedList<>(this), sortPredicate);
+    public LinkedList<T> sorted(Comparator<T> comparator){
+        return mergeSortRecursive(new LinkedList<>(this), new LinkedList<>(this), comparator);
     }
     
     // Sort in-place
-    private LinkedList<T> mergeSortRecursive(LinkedList<T> list, LinkedList<T> temporaryList, BiPredicate<T, T> sortPredicate){
+    private LinkedList<T> mergeSortRecursive(LinkedList<T> list, LinkedList<T> temporaryList, Comparator<T> comparator){
         if (list.count < 2){
             return list;
         }
         else if (list.count == 2){
-            if (!sortPredicate.test(list.root.value, list.end.value)) {
+            if (comparator.compare(list.root.value, list.end.value)> 0) {
                 T temporary = list.root.value;
                 list.root.value = list.end.value;
                 list.end.value = temporary;
@@ -437,15 +437,15 @@ public class LinkedList<T> implements Iterable<T> {
             list2.end = list.end;
             list2.count = list.count - list1.count;
             
-            list1 = mergeSortRecursive(list1, temporaryList, sortPredicate);
-            list2 = mergeSortRecursive(list2, temporaryList, sortPredicate);
+            list1 = mergeSortRecursive(list1, temporaryList, comparator);
+            list2 = mergeSortRecursive(list2, temporaryList, comparator);
             
             LinkedListNode<T> root1 = list1.root,
                               root2 = list2.root,
                               root0 = temporaryList.root;
             
             while (root1 != null && root2 != null){
-                if (sortPredicate.test(root1.value, root2.value)){
+                if (comparator.compare(root1.value, root2.value) < 1){
                     root0.value = root1.value;
                     root1 = root1.next;
                 }
