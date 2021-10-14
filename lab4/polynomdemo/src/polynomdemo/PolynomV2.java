@@ -1,11 +1,12 @@
 package polynomdemo;
 
 import java.util.Arrays;
+import java.util.function.DoubleFunction;
 
 /**
  * @author Dmitriy Naumov
  */
-public class PolynomV2 implements IFunction<Double> {
+public class PolynomV2 implements DoubleFunction<Double> {
     
     // Coefficients of the polynom
     private double[] coefs;
@@ -32,7 +33,7 @@ public class PolynomV2 implements IFunction<Double> {
     public int degree() { return this.coefs.length - 1; }
     
     // get value of function at given argument value
-    @Override public double f(Double arg){
+    @Override public Double apply(double arg){
         double result = this.coefs[0], argCopy = arg;
         for(int i=1; i<this.coefs.length; i++){
             result += argCopy * this.coefs[i];
@@ -105,9 +106,9 @@ public class PolynomV2 implements IFunction<Double> {
     // divide this polynom by scalar value
     PolynomV2 div(double z){
         if(z == 0) 
-            return PolynomV2.constant(Double.POSITIVE_INFINITY);
+            return PolynomV2.constant(Double.NaN);
         else
-            return this.prod(1 / z);
+            return this.prod(1.0 / z);
     }
 
     // multiply this polynom by scalar value

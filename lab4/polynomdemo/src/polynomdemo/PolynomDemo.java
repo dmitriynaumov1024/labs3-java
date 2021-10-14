@@ -15,7 +15,7 @@ public class PolynomDemo {
     public static void main(String[] args) {
         Locale.setDefault(Locale.ENGLISH);
         Scanner in = new Scanner(System.in);
-        System.out.printf("Enter degree of pynomial p: \n");
+        System.out.printf("Enter degree of pynomial p: ");
         int p_degree = in.nextInt();
         double[] p_coefs = new double[p_degree+1];
         for(int i=0; i<=p_degree; i++){
@@ -25,13 +25,13 @@ public class PolynomDemo {
         try { 
             PolynomV2 p = new PolynomV2(p_coefs); 
             System.out.printf("p = %s \n", p.toString());
-            for(double x = -10.0; x <= 10.0; x += 1.0)
-                System.out.printf("Value of p(%f) = %f \n", x, p.f(x));
+            for(double x = 0.0; x <= 10.0; x += 1.0)
+                System.out.printf("Value of p(%f) = %f \n", x, p.apply(x));
             
             PolynomV2 pd = p.derivative(2);
             System.out.printf("p'' = %s \n", pd.toString());
-            for(double x = -10.0; x <= 10.0; x += 1.0)
-                System.out.printf("Value of p''(%f) = %f \n", x, pd.f(x));
+            for(double x = 0.0; x <= 10.0; x += 1.0)
+                System.out.printf("Value of p''(%f) = %f \n", x, pd.apply(x));
             
             System.out.printf("\np = %s \n", p.toString());
             
