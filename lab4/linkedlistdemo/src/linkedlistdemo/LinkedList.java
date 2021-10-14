@@ -1,6 +1,6 @@
 package linkedlistdemo;
 
-import java.lang.reflect.Array;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.function.BiPredicate;
@@ -15,6 +15,10 @@ public class LinkedList<T> implements Iterable<T> {
     class LinkedListNode<T> {
         public T value;
         public LinkedListNode<T> next;
+        
+        public LinkedListNode(){
+            
+        }
     }
     
     class LinkedListIterator<T> implements Iterator<T> {
@@ -400,53 +404,109 @@ public class LinkedList<T> implements Iterable<T> {
     // Return sorted copy of list.
     // This method MergeSort under the hood.
     public LinkedList<T> sorted(BiPredicate<T, T> sortPredicate){
-        return mergeSortRecursive(this, sortPredicate);
+        return mergeSortRecursive(new LinkedList<>(this), new LinkedList<>(this), sortPredicate);
     }
     
-    private LinkedList<T> mergeSortRecursive(LinkedList<T> list, BiPredicate<T, T> sortPredicate){
+    // Sort in-place
+    private LinkedList<T> mergeSortRecursive(LinkedList<T> list, LinkedList<T> temporaryList, BiPredicate<T, T> sortPredicate){
         if (list.count < 2){
             return list;
         }
         else if (list.count == 2){
             if (!sortPredicate.test(list.root.value, list.end.value)) {
-                LinkedList<T> result = new LinkedList<>();
-                result.append(list.end.value);
-                result.append(list.root.value);
-                return result;
+                T temporary = list.root.value;
+                list.root.value = list.end.value;
+                list.end.value = temporary;
             }
             return list;
         }
         else {
-            int middleIndex = list.count / 2;
-            try {
-                LinkedList<T> left = mergeSortRecursive(list.slice(0, middleIndex), sortPredicate),
-                              right = mergeSortRecursive(list.slice(middleIndex, list.count), sortPredicate);
-                return mergeNodeChains(left.root, right.root, sortPredicate);
-            } 
-            catch (Exception ex){
-                return list;
+            LinkedListNode<T> preMiddleNode = list.getNode(list.count / 2 - 1),
+                              middleNode = preMiddleNode.next;
+            
+            preMiddleNode.next = null; // Split (Dangerous!)
+            
+            LinkedList<T> list1 = new LinkedList<>(),
+                          list2 = new LinkedList<>();
+            
+            list1.root = list.root;
+            list1.end = preMiddleNode;
+            list1.count = list.count / 2;
+            
+            list2.root = middleNode;
+            list2.end = list.end;
+            list2.count = list.count - list1.count;
+            
+            list1 = mergeSortRecursive(list1, temporaryList, sortPredicate);
+            list2 = mergeSortRecursive(list2, temporaryList, sortPredicate);
+            
+            LinkedListNode<T> root1 = list1.root,
+                              root2 = list2.root,
+                              root0 = temporaryList.root;
+            
+            while (root1 != null && root2 != null){
+                if (sortPredicate.test(root1.value, root2.value)){
+                    root0.value = root1.value;
+                    root1 = root1.next;
+                }
+                else {
+                    root0.value = root2.value;
+                    root2 = root2.next;
+                }
+                root0 = root0.next;
             }
+            
+            LinkedListNode<T> rootRemains = (root1 != null) ? root1 : root2;
+            while(rootRemains != null){
+                root0.value = rootRemains.value;
+                rootRemains = rootRemains.next;
+                root0 = root0.next;
+            }
+            
+            LinkedList<T> result = new LinkedList<>();
+            result.count = list.count;
+            result.root = temporaryList.root;
+            result.end = temporaryList.getNode(list.count - 1);
+            list2.end.next = result.end.next; // Weld
+            list1.end.next = list2.root; // Weld
+            temporaryList.root = list1.root; // Replace root
+            result.end.next = null; // Cut off result's end
+            return result;
         }
     }
     
-    private LinkedList<T> mergeNodeChains(LinkedListNode<T> root1, LinkedListNode<T> root2, BiPredicate<T, T> sortPredicate){
-        LinkedList<T> result = new LinkedList<>();
-        while (root1 != null && root2 != null){
-            if (sortPredicate.test(root1.value, root2.value)){
-                result.append(root1.value);
-                root1 = root1.next;
-            }
-            else {
-                result.append(root2.value);
-                root2 = root2.next;
+    // Find maximal value
+    public T max(Comparator<T> comparator){
+        if(this.count == 0){
+            return null;
+        }
+        T temporary = this.root.value;
+        for(LinkedListNode<T> current = this.root; 
+            current != null; 
+            current = current.next)
+        {
+            if (comparator.compare(current.value, temporary) > 0){ 
+                temporary = current.value;
             }
         }
-        LinkedListNode<T> rootRemains = (root1 != null) ? root1 : root2;
-        while(rootRemains != null){
-            result.append(rootRemains.value);
-            rootRemains = rootRemains.next;
+        return temporary;
+    }
+    
+    // Find minimal value
+    public T min(Comparator<T> comparator){
+        if(this.count == 0){
+            return null;
         }
-        return result;
+        T temporary = this.root.value;
+        for(LinkedListNode<T> current = this.root; 
+            current != null; 
+            current = current.next)
+        {
+            if (comparator.compare(current.value, temporary) < 0){ 
+                temporary = current.value;
+            }
+        }
+        return temporary;
     }
     
     private LinkedListNode<T> getNode(int index){

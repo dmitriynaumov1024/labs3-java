@@ -1,6 +1,7 @@
 package linkedlistdemo;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Linked List Demo.
@@ -106,6 +107,12 @@ public class Program {
                           lastExampleList
                               .sorted((left, right)->(left < right))
                               .filter((item)->(item % 3 == 0))
+        );
+        
+        System.out.printf("%s | Max: %d | Min: %d \n", 
+                          lastExampleList, 
+                          lastExampleList.max(Comparator.<Integer>naturalOrder()), 
+                          lastExampleList.min(Comparator.<Integer>naturalOrder())
         );
     }
 }
