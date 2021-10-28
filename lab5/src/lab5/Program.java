@@ -1,5 +1,7 @@
 package lab5;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Random;
 
@@ -14,9 +16,28 @@ public class Program {
      * @param args Command line arguments
      */
     public static void main(String[] args) {
-        doMethodDemo();
-        doConcatEfficiencyDemo();
-        doSortDemo();
+        
+        if (args.length == 0){
+            doMethodDemo();
+            doConcatEfficiencyDemo();
+            doSortDemo();
+            return;
+        }
+        
+        switch(args[0].charAt(0)){
+        case '1':
+            doMethodDemo();
+            return;
+        case '2':
+            doConcatEfficiencyDemo();
+            return;
+        case '3':
+            doSortDemo();
+            return;
+        default:
+            System.out.printf("Usage: <task number [1..3]>");
+            return;
+        }
     }
     
     /**
@@ -195,5 +216,82 @@ public class Program {
     
     static void doSortDemo() {
         
+        System.out.printf("\nStringBuffer/Builder sort demo \n");
+        
+        StringBuilder[] builders = new StringBuilder[8];
+        builders[0] = new StringBuilder("miracle");
+        builders[1] = new StringBuilder("misbehave");
+        builders[2] = new StringBuilder("mirage");
+        builders[3] = new StringBuilder("mirth");
+        builders[4] = new StringBuilder("mire");
+        builders[5] = new StringBuilder("miserable");
+        builders[6] = new StringBuilder("misdeed");
+        builders[7] = new StringBuilder("mischief");
+        
+        System.out.printf("\n[1] String builders before sort: \n");
+        for (StringBuilder sb : builders){
+            System.out.printf("%s \n", sb);
+        }
+        
+        Arrays.sort(builders, CharSequenceComparator.getInstance());
+        
+        System.out.printf("\n[1] After sort: \n");
+        for (StringBuilder sb : builders){
+            System.out.printf("%s \n", sb);
+        }
+        
+        StringBuffer[] bufs = new StringBuffer[8];
+        bufs[0] = new StringBuffer("Admission");
+        bufs[1] = new StringBuffer("address");
+        bufs[2] = new StringBuffer("Administration");
+        bufs[3] = new StringBuffer("anticipation");
+        bufs[4] = new StringBuffer("acquire");
+        bufs[5] = new StringBuffer("avanguard");
+        bufs[6] = new StringBuffer("aerial");
+        bufs[7] = new StringBuffer("altitude");
+        
+        System.out.printf("\n[2] String buffers before sort: \n");
+        for (StringBuffer sb : bufs){
+            System.out.printf("%s \n", sb);
+        }
+        
+        Arrays.sort(bufs, CharSequenceComparator.getInstance());
+        
+        System.out.printf("\n[2] After sort: \n");
+        for (StringBuffer sb : bufs){
+            System.out.printf("%s \n", sb);
+        }
+        
+        String[] strings = new String[] {
+            "holiday",
+            "hollow",
+            "greedy",
+            "greeting",
+            "good",
+            "Grown",
+            "grown",
+            "custom",
+            "customer",
+            "culmination"
+        };
+        
+        System.out.printf("\n[3] Strings before sort: \n");
+        for (String s : strings){
+            System.out.println(s);
+        }
+        
+        Arrays.sort(strings, CharSequenceComparator.getInstance());
+        
+        System.out.printf("\n[3] Sorted with CharSequenceComparator: \n");
+        for (String s : strings){
+            System.out.println(s);
+        }
+        
+        Arrays.sort(strings, Comparator.<String>naturalOrder());
+        
+        System.out.printf("\n[3] Sorted with default Comparator: \n");
+        for (String s : strings){
+            System.out.println(s);
+        }
     }
 }
