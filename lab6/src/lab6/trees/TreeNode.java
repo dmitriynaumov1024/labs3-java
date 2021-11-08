@@ -15,4 +15,28 @@ public class TreeNode {
         this.childL = left;
         this.childR = right;
     }
+    
+    public TreeNode getChild (int index) {
+        switch (index) {
+            case 0: 
+                return this.childL;
+            case 1: 
+                return this.childR;
+            default: 
+                return null;
+        }
+    }
+    
+    public TreeNode getChild (boolean index) {
+        return index ? this.childR : this.childL;
+    }
+    
+    public void setChild (int index, TreeNode node) {
+        if (index == 0) {
+            this.childL = node;
+        }
+        else if (index == 1) {
+            this.childR = node;
+        }
+    }
 }
