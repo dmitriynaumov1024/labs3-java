@@ -181,6 +181,10 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         return new TreeIterator<T>((TreeNode<T>)this.root.getChild(1));
     }
     
+    public TreeLevelIterable<T> levels () {
+        return new TreeLevelIterable<>((TreeNode<T>)this.root);    
+    }
+    
     /** 
      * Merge this Tree with other Tree and return a new Tree.
      * @param other other Tree
@@ -215,4 +219,5 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         }
         return sb.toString();
     }
+    
 }
