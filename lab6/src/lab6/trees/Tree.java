@@ -8,7 +8,7 @@ import java.util.Stack;
  */
 public class Tree {
     
-    private TreeNode root;
+    protected TreeNode root;
     
     /**
      * Create new, empty Tree.
@@ -19,19 +19,45 @@ public class Tree {
     }
     
     /**
-     * Make this Tree full (all nodes with 2 children are placed contigously, 
-     * left to right, top to bottom).
+     * Make this Tree full/complete (all nodes with 2 children are placed 
+     * contigously, left to right, top to bottom).
      */
-    public final void restore () {
+    public void restore () {
         
     }
     
     /**
      * Check if this Tree is full/complete.
+     * In a Full/Complete Tree, last index of non-null node must be lesser than
+     * first index of null node.
      * @return whether this Tree is full/complete or not.
      */
     public final boolean checkCompletion () {
-        return true;
+        TreeNode current = this.root.getChild(1);
+        if (current == null) return true;
+        int[] addressHolder = new int[] { Integer.MAX_VALUE, 0 };
+        checkCompletionRecursive(current, 1, addressHolder);
+        return addressHolder[0] > addressHolder[1];
+    }
+    
+    /**
+     * Recursively check for completion.
+     * @param node current node
+     * @param address actual address of node
+     * @param addressHolder holds 2 integers: 
+     *                      #0 is for first null address,
+     *                      #1 is for last non-null address.
+     */
+    private static void checkCompletionRecursive (TreeNode node, int address, int[] addressHolder) {
+        if (node == null) {
+            if (addressHolder[0] > address) addressHolder[0] = address;
+            return;
+        }
+        else {
+            if (addressHolder[1] < address) addressHolder[1] = address;
+            checkCompletionRecursive(node.getChild(0), address * 2, addressHolder);
+            checkCompletionRecursive(node.getChild(1), address * 2 + 1, addressHolder);
+        }        
     }
     
     /**
@@ -45,7 +71,7 @@ public class Tree {
         try {
             return this.getNode(address(depth, horizontal)) != null;
         }
-        finally {
+        catch (TreeException ex) {
             return false;
         }
     }
@@ -59,10 +85,10 @@ public class Tree {
      */
     public final boolean canAddNodeAt (int depth, int horizontal) {
         try {
-            return this.getNode(address(depth, horizontal) / 2)
-                       .getChild(horizontal % 2) == null;
+            TreeNode node = this.getNode(address(depth, horizontal) / 2);
+            return node.getChild(address(depth, horizontal) % 2) == null;
         }
-        finally {
+        catch (TreeException ex) {
             return false;
         }
     }
@@ -75,12 +101,12 @@ public class Tree {
      * @param horizontal horizontal position of required node.
      * @throws TreeException
      */
-    public final void addNodeAt (int depth, int horizontal) throws TreeException {
+    public void addNodeAt (int depth, int horizontal) throws TreeException {
         TreeNode node = this.getNode(address(depth, horizontal) / 2);
-        if (node.getChild(horizontal % 2) != null) {
-            throw new TreeException (TreeException.NODE_OCCUPIED);
+        if (node.getChild(address(depth, horizontal) % 2) != null) {
+            throw new TreeException (TreeException.NODE_EXISTS);
         }
-        node.setChild(horizontal % 2, new TreeNode());
+        node.setChild(address(depth, horizontal) % 2, new TreeNode());
     }
     
     /**
@@ -92,15 +118,17 @@ public class Tree {
      */
     public void removeNodeAt (int depth, int horizontal) throws TreeException {
         TreeNode node = this.getNode(address(depth, horizontal) / 2);
-        if (node.getChild(horizontal % 2) == null) {
+        if (node.getChild(address(depth, horizontal) % 2) == null) {
             throw new TreeException (TreeException.NODE_NOTFOUND);
         }
-        node.setChild(horizontal % 2, null);
+        node.setChild(address(depth, horizontal) % 2, null);
     }
     
     protected TreeNode getNode (int address) throws TreeException {
         TreeNode current = this.root;
-        for (Boolean waypoint : getPath(address)) {
+        Stack<Integer> path = getPath(address);
+        while (path.size() > 0) {
+            Integer waypoint = path.pop();
             current = current.getChild(waypoint);
             if (current == null){
                 throw new TreeException (TreeException.NODE_UNREACHABLE);
@@ -114,19 +142,19 @@ public class Tree {
         super.finalize();
     }
     
-    static Stack<Boolean> getPath (int address) {
+    protected static Stack<Integer> getPath (int address) {
         if (address <= 0){
             return new Stack<>();
         }
-        Stack<Boolean> result = new Stack<>();
+        Stack<Integer> result = new Stack<>();
         while (address > 0) {
-            result.push((address % 2 == 0) ? Boolean.FALSE : Boolean.TRUE);
+            result.push(address % 2);
             address /= 2;
         }
         return result;
     }
     
-    static int address (int depth, int horizontal) {
-        return 1 << depth + horizontal;
+    protected static int address (int depth, int horizontal) {
+        return (1 << depth) + horizontal;
     }
 }
