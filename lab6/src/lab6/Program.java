@@ -79,8 +79,16 @@ public class Program {
             System.out.printf("Value at [%d:%d] = %d \n", d, h, tree.getValueAt(d, h));
             System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
             
+            System.out.printf ("Restoring tree, keeping nulls... \n");
+            tree.restore();
+            System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
+            
+            System.out.printf ("Restoring tree, discarding nulls...\n");
+            tree.restore(false);
+            System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
+            
             Tree<Integer> tree2 = new Tree<Integer>(20);
-            System.out.printf ("\n Tree of size 20, level by level: \n%s \n", tree2.levels());
+            System.out.printf ("\nTree of size 20, level by level: \n%s \n", tree2.levels());
         }
         catch (Exception ex) {
             System.out.printf ("Exception: %s \n", ex.getMessage());
