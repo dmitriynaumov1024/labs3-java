@@ -12,7 +12,7 @@ public class Program {
      * Entry point.
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Tree<Integer> tree = new Tree<>();
         try {
             int d = 0, h = 0;
@@ -83,15 +83,20 @@ public class Program {
             tree.restore();
             System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
             
-            System.out.printf ("Restoring tree, discarding nulls...\n");
-            tree.restore(false);
-            System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
             
-            Tree<Integer> tree2 = new Tree<Integer>(20);
-            System.out.printf ("\nTree of size 20, level by level: \n%s \n", tree2.levels());
+            Integer[] arr = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+            Tree<Integer> tree1 = new Tree<Integer>(new ArrayIterable(arr));
+            System.out.printf ("\ntree1: \n%s \n", tree1.levels());
+            
+            Tree<Integer> tree2 = new Tree<Integer>(10, 20);
+            System.out.printf ("\ntree2 of size 20: \n%s \n", tree2.levels());
+            
+            Tree<Integer> tree3 = tree.merge(tree2);
+            System.out.printf ("\ntree3, result of merging tree1 with tree2: \n%s \n", tree3.levels());
         }
         catch (Exception ex) {
-            System.out.printf ("Exception: %s \n", ex.getMessage());
+            System.out.printf ("Exception: %s \n", ex.toString());
+            throw ex;
         }
         
     }
