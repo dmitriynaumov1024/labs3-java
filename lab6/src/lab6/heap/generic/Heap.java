@@ -20,6 +20,7 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         for (T item : source) {
             this.add(item);
         }
+        this.restore();
     }
     
     public Heap (Iterable<T> source) {
@@ -27,6 +28,7 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         for (T item : source) {
             this.add(item);
         }
+        this.restore();
     }
     
     /**
@@ -69,6 +71,9 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
     }
     
     public void add (T val) {
+        if (val == null) {
+            throw new Error("Null values are not allowed in Heap.");
+        }
         if (this.size == 0) {
             this.root.setChild(1, new TreeNode<T>(val));
         }
@@ -116,6 +121,9 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
     }
     
     public void setAt (int address, T val) throws Exception {
+        if (val == null) {
+            throw new Error("Null values are not allowed in Heap.");
+        }
         TreeNode<T> node = (TreeNode<T>)this.getNode(address);
         if (node != null) {
             node.value = val;

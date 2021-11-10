@@ -14,10 +14,13 @@ public class Program {
      * @param args the command line arguments
      */
     public static void main (String[] args) throws Exception {
+        testTree();
         testHeap();
     }
     
     static void testTree () throws Exception {
+        System.out.printf ("[ TREE DEMO ]\n");
+        
         Tree<Integer> tree = new Tree<>();
         int d = 0, h = 0;
         tree.addNodeAt(d, h);
@@ -92,14 +95,15 @@ public class Program {
         Tree<Integer> tree1 = new Tree<Integer>(new ArrayIterable(arr));
         System.out.printf ("\ntree1: \n%s \n", tree1.levels());
 
-        Tree<Integer> tree2 = new Tree<Integer>(10, 20);
-        System.out.printf ("\ntree2 of size 20: \n%s \n", tree2.levels());
+        Tree<Integer> tree2 = new Tree<Integer>(null, 20);
+        System.out.printf ("\ntree2, constructed with size 20: \n%s \n", tree2.levels());
 
         Tree<Integer> tree3 = tree.merge(tree2);
         System.out.printf ("\ntree3, result of merging tree1 with tree2: \n%s \n", tree3.levels());
     }
     
     static void testHeap () throws Exception {
+        System.out.printf ("[ HEAP DEMO ]\n");
         
         Heap<Integer> heap1 = new Heap<Integer>();
         heap1.add(1);
@@ -128,6 +132,13 @@ public class Program {
         System.out.printf ("heap1 was restored\n");
         System.out.printf ("\nheap1: \n%s \n", heap1.levels());
         
+        Integer[] arr = new Integer[] { 5, 6, 7, 8, 1, 2, 3, 4, 5, 14, 2, 0, -1, 99, 100, 0, -100 };
+        Heap<Integer> heap2 = new Heap<Integer>(arr);
+        
+        System.out.printf ("heap2 was made from array ");
+        for (Integer item : arr) 
+            System.out.printf ("%d ", item);
+        System.out.printf ("\nheap2: \n%s \n", heap2.levels());
     }
     
 }
