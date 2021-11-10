@@ -1,7 +1,6 @@
 package lab6.trees.generic;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import lab6.queue.generic.Queue;
 
 /**
  * Iterator for generic tree.
@@ -14,7 +13,7 @@ public class TreeIterator<T> implements java.util.Iterator<T> {
     private int currentDepth;
     
     public TreeIterator (TreeNode<T> source) {
-        this.items = new ConcurrentLinkedQueue<>();
+        this.items = new Queue<>();
         this.node = source;
         this.currentDepth = -1;
     }
