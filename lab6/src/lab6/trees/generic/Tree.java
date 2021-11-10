@@ -1,9 +1,9 @@
 package lab6.trees.generic;
 
 import lab6.trees.*;
-import java.util.Queue;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.List;
+import java.util.LinkedList;
 
 /**
  * A generic binary tree.
@@ -73,22 +73,17 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
     public void restore (boolean keepNulls) {
         System.out.printf ("[debug]: Tree<T>.restore \n");
         TreeNode<T> node = (TreeNode<T>) this.root.getChild(1);
-        Queue<T> que = new ConcurrentLinkedQueue<>();
-        int[] addressHolder = new int[] { Integer.MAX_VALUE };
-        int depth = 0;
+        List<T> list = new LinkedList<>();
+        int depth = -1;
         do {
             depth++;
         } 
-        while (collectBadNodesRecursive(node, depth, 1 << depth, addressHolder, que, keepNulls));
-        
-        for (T item : que) {
-            System.out.printf ("%s ", item);
-        }
-        System.out.printf ("\n");
+        while (collectNodesRecursive(node, depth, list, keepNulls));
+        this.root = new Tree(list).root;
     }
     
     /**
-     * Collect all bad node values recursively. 
+     * Collect all node values recursively. 
      * This is a part of restoration algorithm.
      * @param node current node
      * @param depth required depth
@@ -97,46 +92,33 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
      * @param valuesHolder queue where badly placed values are stored.
      * @param keepNulls whether to keep nulls
      */
-    private boolean collectBadNodesRecursive (
+    private boolean collectNodesRecursive (
             TreeNode<T> node, 
             int depth, 
-            int address,
-            int[] addressHolder, 
-            Queue<T> valuesHolder, 
+            List<T> valuesHolder, 
             boolean keepNulls) 
     {
         if (node == null) {
-            if (address < addressHolder[0]) {
-                addressHolder[0] = address;
-            }
             return false;
         }
         else if (depth == 0) {
             if (keepNulls || node.value != null) {
-                if (address > addressHolder[0]){
-                    valuesHolder.add(node.value);
-                }
-            }
-            else if (address < addressHolder[0]){
-                addressHolder[0] = address;
+                valuesHolder.add(node.value);
+                
             }
             return true;
         }
         else {
-            boolean result0 = collectBadNodesRecursive (
+            boolean result0 = collectNodesRecursive (
                     (TreeNode<T>)node.getChild(0), 
                     depth - 1, 
-                    address * 2, 
-                    addressHolder, 
                     valuesHolder, 
                     keepNulls
             );
             
-            boolean result1 = collectBadNodesRecursive (
+            boolean result1 = collectNodesRecursive (
                     (TreeNode<T>)node.getChild(1), 
                     depth - 1, 
-                    address * 2 + 1, 
-                    addressHolder, 
                     valuesHolder, 
                     keepNulls
             );
