@@ -40,6 +40,10 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         this(Repeat.<T>times(count).value(null));
     }
     
+    /**
+     * Build a specified level of tree, using specific iterator as item source.
+     * This is a part of Tree construction algorithm.
+     */
     private void buildLevelsRecursive (
             TreeNode<T> node, 
             int depth, 
@@ -186,7 +190,7 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         Iterator<T> iterOther = other.iterator();
         if (iterThis.hasNext()) {
             TreeNode<T> node = new TreeNode<>(iterThis.next());
-            this.root.setChild(1, node);
+            result.root.setChild(1, node);
             int depth = 1;
             while (iterThis.hasNext()) {
                 buildLevelsRecursive (node, depth, iterThis);
