@@ -32,6 +32,14 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         }
     }
     
+    public Tree (T val, int count) {
+        this(Repeat.<T>times(count).value(val));
+    }
+    
+    public Tree (int count) {
+        this(Repeat.<T>times(count).value(null));
+    }
+    
     private void buildLevelsRecursive (
             TreeNode<T> node, 
             int depth, 
