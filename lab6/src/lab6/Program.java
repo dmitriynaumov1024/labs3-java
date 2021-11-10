@@ -63,9 +63,14 @@ public class Program {
             System.out.printf("Value at [%d:%d] = %d \n", d, h, tree.getValueAt(d, h));
             System.out.printf("Is this Tree full/complete? %s \n", tree.checkCompletion());
             
-            System.out.printf ("%s \n", tree);
+            System.out.printf ("\nTree.toString: \n%s \n", tree);
             
+            System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
             
+            d = 1; h = 0;
+            tree.setValueAt(d, h, null);
+            System.out.printf("Value at [%d:%d] = %d \n", d, h, tree.getValueAt(d, h));
+            System.out.printf ("\nTreeLevelIterable.toString: \n%s \n", tree.levels());
         }
         catch (Exception ex) {
             System.out.printf ("Exception: %s \n", ex.getMessage());
