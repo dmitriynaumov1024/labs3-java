@@ -91,8 +91,6 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
      * This is a part of restoration algorithm.
      * @param node current node
      * @param depth required depth
-     * @param address node address
-     * @param addressHolder array where first null value address is stored.
      * @param valuesHolder queue where badly placed values are stored.
      * @param keepNulls whether to keep nulls
      */
