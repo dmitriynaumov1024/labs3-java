@@ -19,8 +19,8 @@ public class SimpsonIntegral extends ApproxIntegral {
           (
             + this.func.apply(a)
             + this.func.apply(b)
-            + this.func.apply((2*a + b) / 3)
-            + this.func.apply((2*b + a) / 3)
+            + 3 * this.func.apply((2*a + b) / 3)
+            + 3 * this.func.apply((2*b + a) / 3)
           )
           * 
           (b - a) / 8;
