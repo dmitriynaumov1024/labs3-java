@@ -32,9 +32,6 @@ public abstract class ApproxIntegral extends FunctionIntegral {
     /**
      * Perform approximate integration of function on given interval with 
      * given step.
-     * @param a starting point of interval
-     * @param b end point of interval
-     * @return result of approximate integration with given step.
      */
     @Override public double integrate (double a, double b) {
         double result = 0;
