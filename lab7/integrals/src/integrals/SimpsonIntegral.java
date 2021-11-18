@@ -1,7 +1,7 @@
 package integrals;
 
 /**
- *
+ * Simpson integral
  * @author Dmitriy Naumov
  */
 public class SimpsonIntegral extends ApproxIntegral {

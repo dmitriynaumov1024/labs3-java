@@ -16,30 +16,49 @@ public class Program {
         
         Locale.setDefault(Locale.ENGLISH);
         
-        Function f1 = new Function(){
-            @Override public double apply(double arg) {
-                return (6 - arg * arg) / (arg * arg * arg + 3);
+        Function[] functions = new Function[] {
+            new Function(){
+                @Override public double apply(double arg) {
+                    return (6 - arg * arg) / (arg * arg * arg + 3);
+                }
+                @Override public String toString() {
+                    return "f(x) = (6 - x^2) / (x^3 + 3)";
+                }
+            },
+            new Function(){
+                @Override public double apply(double arg) {
+                    return Math.pow(6 + arg, 2) * Math.sqrt(arg + 3);
+                }
+                @Override public String toString() {
+                    return "f(x) = (6 + x)^2 * sqrt(x + 3)";
+                }
+            },
+            new Function(){
+                @Override public double apply(double arg) {
+                    return Math.sqrt(Math.log(arg + 6)) / arg + 3;
+                }
+                @Override public String toString() {
+                    return "f(x) = sqrt(ln(x + 6)) / x + 3";
+                }
             }
         };
         
-        double start = 0, end = 33.25, step = 0.1;
+        double start = 1, end = Math.PI, step = 0.5;
         
-        FunctionIntegral 
-            i1 = new RectIntegral(f1, step),
-            i2 = new TrapezoidIntegral(f1, step),
-            i3 = new SimpsonIntegral(f1, step);
-        
-        System.out.printf (
-            "Integrated f(x) = (6 - x^2) / (x^3 + 3) from %f to %f with step %f \n",
-            start, end, step
-        );
-        
-        System.out.printf ("Results of \n");
-        
-        System.out.printf ("- Rectangular Integral : %f \n", i1.integrate(start, end));
-        System.out.printf ("- Trapezoid Integral   : %f \n", i2.integrate(start, end));
-        System.out.printf ("- Simpson Integral     : %f \n", i3.integrate(start, end));
-        
+        for (Function f : functions) {
+            FunctionIntegral 
+                i1 = new RectIntegral(f, step),
+                i2 = new TrapezoidIntegral(f, step),
+                i3 = new SimpsonIntegral(f, step);
+
+            System.out.printf (
+                "\nIntegrated %s \nfrom %f to %f with step %f \n",
+                f, start, end, step
+            );
+
+            System.out.printf ("- Rectangular integration : %f \n", i1.integrate(start, end));
+            System.out.printf ("- Trapezoid integration   : %f \n", i2.integrate(start, end));
+            System.out.printf ("- Simpson integration     : %f \n", i3.integrate(start, end));
+        }
     }
-    
 }
