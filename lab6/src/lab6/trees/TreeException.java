@@ -1,18 +1,20 @@
 package lab6.trees;
 
 /**
- * Tree exception. Can be thrown when something bad occurs in Tree object.
+ * Tree exception. Can be thrown when something goes wrong in Tree object.
  * @author Dmitriy Naumov
  */
 public class TreeException extends Exception {
     
-    public int variant;
-    
-    public TreeException (int variant, String message) {
-        super (message);
-        this.variant = variant;
-    }
-    
+    /**
+     * Variant of this exception. Known TreeException variants are stored in constants.
+     */
+    protected int variant;
+   
+    /**
+     * Create new TreeException of given variant. Known TreeException variants are stored in constants.
+     * @param variant variant of the exception
+     */
     public TreeException (int variant) {
         super ();
         this.variant = variant;
@@ -33,6 +35,9 @@ public class TreeException extends Exception {
         }
     }
     
+    /**
+     * TreeException variant constants.
+     */
     public final static int
         UNKNOWN             = 0,
         NODE_UNREACHABLE    = 1,

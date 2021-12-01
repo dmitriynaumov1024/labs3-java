@@ -3,11 +3,16 @@ package lab6.trees;
 import java.util.Stack;
 
 /**
- * A binary tree without any values.
+ * A binary tree without any values. This tree is made of value-less tree nodes
+ * 
+ * @see TreeNode.java 
  * @author Dmitriy Naumov
  */
 public class Tree {
     
+    /**
+     * root node of this tree
+     */
     protected TreeNode root;
     
     /**
@@ -81,7 +86,7 @@ public class Tree {
      * be path to the node and given position must not be occupied. 
      * @param depth depth of required node.
      * @param horizontal horizontal position of required node.
-     * @return if node can be added in given position.
+     * @return whether node can be added in given position.
      */
     public final boolean canAddNodeAt (int depth, int horizontal) {
         try {
@@ -99,7 +104,8 @@ public class Tree {
      * taken. Otherwise this method will throw TreeException.
      * @param depth depth of required node.
      * @param horizontal horizontal position of required node.
-     * @throws TreeException
+     * @throws TreeException if parent node cannot be reached or if node 
+     * already exists.
      */
     public void addNodeAt (int depth, int horizontal) throws TreeException {
         TreeNode node = this.getNode(address(depth, horizontal) / 2);
@@ -114,7 +120,8 @@ public class Tree {
      * Otherwise this method will throw TreeException.
      * @param depth depth of required node.
      * @param horizontal horizontal position of required node.
-     * @throws TreeException
+     * @throws TreeException if parent node cannot be reached or node does 
+     * not exist.
      */
     public void removeNodeAt (int depth, int horizontal) throws TreeException {
         TreeNode node = this.getNode(address(depth, horizontal) / 2);
@@ -124,6 +131,12 @@ public class Tree {
         node.setChild(address(depth, horizontal) % 2, null);
     }
     
+    /**
+     * Get node with given linear address.
+     * @param address linear address of node
+     * @return node with given address
+     * @throws TreeException if node cannot be found.
+     */
     protected TreeNode getNode (int address) throws TreeException {
         TreeNode current = this.root;
         Stack<Integer> path = getPath(address);
@@ -137,11 +150,26 @@ public class Tree {
         return current;
     }
     
+    /**
+     * Break cycle reference at root node of this tree to ensure that nodes can
+     * be finalized without problems. Is necessary when reference-counting 
+     * garbage collector is used.
+     * @throws Throwable if superclass finalization went wrong 
+     */
     @Override protected void finalize() throws Throwable {
         if (this.root != null) this.root.childL = null;
         super.finalize();
     }
     
+    /**
+     * Get path to node with given linear address. Path is a stack of waypoints 
+     * with 0..1 values indicating whether search should go to left or right 
+     * child of node. It is basically a binary representation of address with 
+     * most significant bit on top of the stack.
+     * @param address linear address of node
+     * @return a stack of waypoints with 0..1 values indicating whether search 
+     * should go to left or right child of node.
+     */
     protected static Stack<Integer> getPath (int address) {
         if (address <= 0){
             return new Stack<>();
@@ -154,6 +182,14 @@ public class Tree {
         return result;
     }
     
+    /**
+     * Convert depth-horizontal address to linear address of node. Linear 
+     * address is then to be converted to stack of waypoints to reach the node.
+     * @param depth depth of node (depth of first level is 0)
+     * @param horizontal horizontal position of node (from 0 to 2^depth - 1 inclusively). 
+     * Horizontal overflow will transfer to next depth levels.
+     * @return linear address of node
+     */
     protected static int address (int depth, int horizontal) {
         return (1 << depth) + horizontal;
     }
