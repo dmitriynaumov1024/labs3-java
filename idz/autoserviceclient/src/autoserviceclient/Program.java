@@ -1,7 +1,10 @@
 package autoserviceclient;
 
 import autoservice.core.*;
-import java.io.*;
+import autoservice.db.*;
+import autoservice.util.*;
+
+import java.util.*;
 
 /**
  * Main class
@@ -10,30 +13,53 @@ import java.io.*;
 public class Program {
 
     public static void main(String[] args) {
+        
+        AutoServiceDB database = AutoServiceDB.instance();
+        
         Car car1 = new Car();
         car1.brand = "Tesla";
         car1.model = "Model Y";
         car1.licensePlate = "AP8454EP";
         car1.ownerNumber = "0934420198";
         
-        try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("eee.txt"))){
-            os.writeObject(car1);
-            os.writeObject(new ServiceAction());
-            os.close();
-        }
-        catch (Exception ex) {
-            System.out.printf("Exception : %s \n", ex.getMessage());
-        }
+        int car1_id = database.addCar(car1);
+        System.out.println(database.getCarById(car1_id));
         
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("eee.txt"))){
-            Car car2 = (Car)ois.readObject();
-            ois.close();
-            System.out.println(car1);
-            System.out.println(car2);
-        }
-        catch (Exception ex) {
-            System.out.printf("Exception : %s \n", ex.getMessage());
-        }
+        Worker worker1 = new Worker();
+        worker1.surname = "Jameson";
+        worker1.name = "Susan";
+        worker1.preferences = new LinkedList<CarTag>();
+        worker1.preferences.add(CarTag.PetrolEngine);
+        worker1.preferences.add(CarTag.Generic);
+        worker1.phoneNumber = "7023239293";
+        worker1.hourSalary = 1000;
+        
+        int worker1_id = database.addWorker(worker1);
+        
+        System.out.println();
+        
+        ServiceAction action1 = new ServiceAction();
+        action1.carId = car1_id;
+        action1.workerId = worker1_id;
+        action1.servicedParts = new LinkedList<Several<CarPart>>();
+        action1.servicedParts.add (
+            new Several<CarPart> (
+                1, new CarPart (
+                    "Tesla",
+                    "Front tire",
+                    "Front tire, diameter 19\"",
+                    5600
+                )
+            )
+        );
+        action1.variant = ServiceVariant.RegularService;
+        
+        int act1_id = database.addServiceAction(action1);
+        
+        System.out.println(database.getServiceActionById(act1_id));
+        System.out.printf("Price : %d", database.getServiceActionById(act1_id).getPrice());
+        
+        AutoServiceDB.unload();
     }
     
 }
