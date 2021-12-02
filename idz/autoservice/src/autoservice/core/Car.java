@@ -7,6 +7,7 @@ package autoservice.core;
 public class Car implements java.io.Serializable {
     public String brand;
     public String model;
+    public int manufactureYear;
     public String licensePlate;
     public String ownerNumber;
     
