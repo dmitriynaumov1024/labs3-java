@@ -5,7 +5,14 @@ package autoservice.util;
  * @param <T> item type
  * @author Dmitriy Naumov
  */
-public class Several<T> {
+public class Several<T> implements java.io.Serializable {
     public T value;
     public int count;
+    
+    public Several () { }
+    
+    public Several (int count, T val) {
+        this.count = count;
+        this.value = val;
+    }
 }
