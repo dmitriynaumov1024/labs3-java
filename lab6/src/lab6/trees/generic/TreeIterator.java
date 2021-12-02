@@ -5,6 +5,8 @@ import lab6.queue.generic.Queue;
 /**
  * Iterator for generic tree.
  * @author Dmitriy Naumov
+ * @see java.util.Iterator
+ * @see lab6.trees.generic.Tree
  */
 public class TreeIterator<T> implements java.util.Iterator<T> {
 
@@ -12,12 +14,20 @@ public class TreeIterator<T> implements java.util.Iterator<T> {
     private TreeNode<T> node;
     private int currentDepth;
     
+    /**
+     * Create new iterator from given generic Tree
+     * @param source given tree to iterate over it
+     */
     public TreeIterator (TreeNode<T> source) {
         this.items = new Queue<>();
         this.node = source;
         this.currentDepth = -1;
     }
     
+    /**
+     * Check whether this iterator has more elements
+     * @return whether this iterator has more elements
+     */
     @Override public boolean hasNext() {
         if (this.items.isEmpty()){
             this.currentDepth++;
@@ -25,7 +35,11 @@ public class TreeIterator<T> implements java.util.Iterator<T> {
         }
         else return true;
     }
-
+    
+    /**
+     * Get next element of this iterator, if available.
+     * @return next element of this iterator
+     */
     @Override public T next() {
         return this.items.poll();
     }

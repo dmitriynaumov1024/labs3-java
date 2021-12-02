@@ -3,9 +3,11 @@ package lab6.trees;
 import java.util.Stack;
 
 /**
- * A binary tree without any values. This tree is made of value-less tree nodes
+ * A binary tree without any values. 
+ * This tree is made of value-less tree nodes.
  * 
- * @see TreeNode.java 
+ * @see lab6.trees.TreeNode
+ * @see lab6.trees.generic.Tree
  * @author Dmitriy Naumov
  */
 public class Tree {

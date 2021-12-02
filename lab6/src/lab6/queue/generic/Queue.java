@@ -1,10 +1,11 @@
 package lab6.queue.generic;
 
-import java.util.Iterator;
-
 /**
- * Queue, but FRICKING NORMAL QUEUE ABLE TO STORE NULLS!!!!!!11!!1!1!!!
+ * A generic queue which allows to add and take elements from opposite ends, 
+ * also known as FIFO
+ * @param <T> data type
  * @author Dmitriy Naumov
+ * @see <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">Queue (abstract data type) on Wikipedia</a>
  */
 public class Queue<T> {
 
@@ -12,11 +13,18 @@ public class Queue<T> {
     private Node<T> tail;
     private int size;
     
+    /**
+     * Create new, empty queue.
+     */
     public Queue () {
         this.front = null;
         this.tail = null;
     }
     
+    /**
+     * add value to the end of this queue
+     * @param value value to add
+     */
     public void add (T value) {
         if (this.size == 0){
             this.front = new Node<T>();
@@ -29,7 +37,12 @@ public class Queue<T> {
         this.tail.value = value;
         this.size++;
     }
-
+    
+    /**
+     * remove value from the head of this queue and return it.
+     * @throws Error if queue has no items
+     * @return value from the head of this queue
+     */
     public T poll () {
         if (this.size == 0) {
             throw new Error("Attempted to get item while Queue size was 0");
@@ -40,12 +53,28 @@ public class Queue<T> {
         return result;
     }
     
+    /**
+     * Check if this queue is empty.
+     * @return whether this queue is empty, e.g. its size is zero.
+     */
     public boolean isEmpty () {
         return this.size == 0;
     }
     
+    /**
+     * A generic queue node. It contains a value and pointer to next node. 
+     * @param <T> data type
+     */
     class Node<T> {
+        
+        /**
+         * value of this node
+         */
         public T value;
+        
+        /**
+         * pointer to next node
+         */
         public Node<T> next;
     }
 }

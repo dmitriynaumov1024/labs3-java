@@ -3,18 +3,32 @@ package lab6.heap.generic;
 import lab6.trees.generic.*;
 
 /**
- * A generic heap
+ * A generic heap. Heap is a variant of Tree where every element conforms to 
+ * heap condition: every child value must be greater than parent node value.
+ * This heap is built on generic binary tree nodes and inherits functionality
+ * of generic binary tree.
+ * @param <T> data type
  * @author Dmitriy Naumov
+ * @see lab6.trees.generic.Tree
+ * @see lab6.trees.generic.TreeNode
+ * @see <a href="https://en.wikipedia.org/wiki/Heap_(data_structure)">Heap (data structure) on Wikipedia</a>
  */
 public class Heap<T extends Comparable<T>> extends Tree<T> {
     
     private int size;
     
+    /**
+     * Create new, empty heap. 
+     */
     public Heap () {
         super();
         this.size = 0;
     }
     
+    /**
+     * Create new heap from an array of items. 
+     * @param source array of items to use
+     */
     public Heap (T[] source) {
         this();
         for (T item : source) {
@@ -23,6 +37,10 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         this.restore();
     }
     
+    /**
+     * Create new heap from an iterable collection of items.
+     * @param source iterable collection of items to use
+     */
     public Heap (Iterable<T> source) {
         this();
         for (T item : source) {
@@ -70,6 +88,11 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         }
     }
     
+    /**
+     * Add new value to the end of this heap.
+     * @param val value to add
+     * @throws Error if null value was passed as parameter, because null values are not allowed in heap.
+     */
     public void add (T val) {
         if (val == null) {
             throw new Error("Null values are not allowed in Heap.");
@@ -89,18 +112,32 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         this.size++;
     }
     
+    /**
+     * Add an array of elements to this heap.
+     * @param values array of elements to add to this heap
+     */
     public void add (T[] values) {
         for (T item : values) {
             this.add(item);
         }
     }
     
+    /**
+     * Add an iterable collection of elements to this heap.
+     * @param values iterable collection of elements to add to this heap
+     */
     public void add (Iterable<T> values) {
         for (T item : values) {
             this.add(item);
         }
     }
     
+    /**
+     * Remove an element at given address in this heap and fill the gap with 
+     * the last element of this heap. If given address can not be reached, no 
+     * action is performed.
+     * @param address address of element to remove
+     */
     public void removeAt (int address) {
         try {
             TreeNode<T> 
@@ -120,6 +157,12 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         }
     }
     
+    /**
+     * Set value at given address.
+     * @param address address of node
+     * @param val value to write into node
+     * @throws Exception if node can't be reached.
+     */
     public void setAt (int address, T val) throws Exception {
         if (val == null) {
             throw new Error("Null values are not allowed in Heap.");
@@ -130,11 +173,21 @@ public class Heap<T extends Comparable<T>> extends Tree<T> {
         }
     }
     
+    /**
+     * Get value at given address
+     * @param address address of node
+     * @return value at given address, if address is reachable
+     * @throws Exception if node can't be reached.
+     */
     public T getValueAt (int address) throws Exception {
         TreeNode<T> node = (TreeNode<T>)this.getNode(address);
         return node.value;
     }
     
+    /**
+     * Get size of this heap.
+     * @return size of this heap.
+     */
     public int size () {
         return this.size;
     }

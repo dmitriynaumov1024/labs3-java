@@ -7,17 +7,26 @@ import java.util.LinkedList;
 
 /**
  * A generic binary tree.
- * 
- * @param <T> Type of value.
+ * @see lab6.trees.Tree
+ * @see lab6.trees.generic.TreeNode
+ * @param <T> data type.
  * @author Dmitriy Naumov
  */
 public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
     
+    /**
+     * Create new, empty tree.
+     */
     public Tree () {
         this.root = new TreeNode<T>(null);
         this.root.setChild(0, root);
     }
     
+    /**
+     * Create new tree from given iterable collection of values. Values are 
+     * placed row by row. Constructed tree is always complete.
+     * @param values values to fill the tree
+     */
     public Tree (Iterable<T> values) {
         this();
         Iterator<T> iter = values.iterator();
@@ -32,10 +41,19 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         }
     }
     
+    /**
+     * Create new tree with the same value repeated.
+     * @param val value to use
+     * @param count number of repetitions
+     */
     public Tree (T val, int count) {
         this(Repeat.<T>times(count).value(val));
     }
     
+    /**
+     * Create new tree with given number of empty (null-valued) nodes.
+     * @param count required number of nodes.
+     */
     public Tree (int count) {
         this(Repeat.<T>times(count).value(null));
     }
@@ -135,7 +153,7 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
      * taken. Otherwise this method will throw TreeException.
      * @param depth depth of required node.
      * @param horizontal horizontal position of required node.
-     * @throws TreeException
+     * @throws TreeException if node at given address already exists
      */
     @Override public void addNodeAt (int depth, int horizontal) throws TreeException {
         TreeNode<T> node = (TreeNode<T>)this.getNode(address(depth, horizontal) / 2);
@@ -150,7 +168,7 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
      * @param depth depth of node
      * @param horizontal horizontal offset of node
      * @param value new value
-     * @throws TreeException 
+     * @throws TreeException if node cannot be reached
      */
     public void setValueAt (int depth, int horizontal, T value) throws TreeException {
         TreeNode<T> node = (TreeNode<T>) this.getNode(address(depth, horizontal));
@@ -162,17 +180,26 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
      * @param depth depth of node
      * @param horizontal horizontal offset of node.
      * @return value of node at given depth and horizontal offset
-     * @throws TreeException 
+     * @throws TreeException if node cannot be reached
      */
     public T getValueAt (int depth, int horizontal) throws TreeException {
         TreeNode<T> node = (TreeNode<T>) this.getNode(address(depth, horizontal));
         return node.value;
     }
     
+    /**
+     * Create an iterator for this tree
+     * @return iterator for this tree
+     */
     @Override public Iterator<T> iterator () {
         return new TreeIterator<T>((TreeNode<T>)this.root.getChild(1));
     }
     
+    /**
+     * Create level-by-level iterable for this tree.
+     * @see lab6.trees.generic.TreeLevelIterable
+     * @return level-by-level iterable for this tree
+     */
     public TreeLevelIterable<T> levels () {
         return new TreeLevelIterable<>((TreeNode<T>)this.root);    
     }
@@ -203,6 +230,10 @@ public class Tree<T> extends lab6.trees.Tree implements Iterable<T> {
         return result;
     }
     
+    /**
+     * String representation of this tree.
+     * @return all elements of this tree in one row, separated with whitespace.
+     */
     @Override public String toString () {
         StringBuilder sb = new StringBuilder();
         for (T item : this) {
