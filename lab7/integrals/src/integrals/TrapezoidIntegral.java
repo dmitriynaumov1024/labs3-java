@@ -3,9 +3,15 @@ package integrals;
 /**
  * Trapezoid integral
  * @author Dmitriy Naumov
+ * @see <a href="https://en.wikipedia.org/wiki/Trapezoidal_rule">Trapezoidal integration rule on Wikipedia</a>
  */
 public class TrapezoidIntegral extends ApproxIntegral {
     
+    /**
+     * Create new trapezoid integral with given function and given step.
+     * @param func function to integrate
+     * @param step integration step
+     */
     public TrapezoidIntegral (Function func, double step) {
         super (func, step);
     }

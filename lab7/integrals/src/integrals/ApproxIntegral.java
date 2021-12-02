@@ -6,9 +6,19 @@ package integrals;
  */
 public abstract class ApproxIntegral extends FunctionIntegral {
     
+    /**
+     * Function to integrate
+     */
     protected Function func;
+    
     private double step;
     
+    /**
+     * Create new approximate integral from given function and given step.
+     * @param func single-parameter function to integrate
+     * @param step integration step
+     * @see integrals.Function
+     */
     public ApproxIntegral (Function func, double step) {
         if (func == null) {
             throw new NullPointerException ("Function passed to constructor was null.");

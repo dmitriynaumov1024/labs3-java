@@ -1,7 +1,7 @@
 package integrals;
 
 /**
- * Abstract integral class
+ * Abstract integral class which allows to integrate anything on given interval.
  * @author Dmitriy Naumov
  */
 public abstract class FunctionIntegral {
