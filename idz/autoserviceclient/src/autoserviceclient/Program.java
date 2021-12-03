@@ -13,7 +13,23 @@ import java.util.*;
 public class Program {
 
     public static void main(String[] args) {
+        AutoServiceDB database = AutoServiceDB.instance();
         
+        for (Map.Entry<Integer, Car> car : database.getCars()) {
+            System.out.printf("id : %d \n", car.getKey());
+            System.out.println(car.getValue().toString());
+        }
+        System.out.println();
+        
+        for (Map.Entry<Integer, ServiceAction> act : database.getServiceActions(ServiceStatus.Finished)) {
+            System.out.printf("id : %d \n", act.getKey());
+            System.out.println(act.getValue().toString());
+        }
+        System.out.println();
+        AutoServiceDB.unload();
+    }
+    
+    public void addExampleData () {
         AutoServiceDB database = AutoServiceDB.instance();
         
         Car car1 = new Car();
@@ -58,8 +74,6 @@ public class Program {
         
         System.out.println(database.getServiceActionById(act1_id));
         System.out.printf("Price : %d", database.getServiceActionById(act1_id).getPrice());
-        
-        AutoServiceDB.unload();
     }
     
 }
