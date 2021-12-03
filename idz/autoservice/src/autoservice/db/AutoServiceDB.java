@@ -94,7 +94,7 @@ public class AutoServiceDB {
             out.close();
         }
         catch (Exception ex) {
-            System.out.printf("I hate Java \n");
+            System.out.printf("Exception: %s \n", ex.getMessage());
         }
     }
     
@@ -229,6 +229,45 @@ public class AutoServiceDB {
                 result.add(act);
             }
         }
+        return result;
+    }
+    
+    /**
+     * Get all cars in database
+     */
+    public Collection<Map.Entry<Integer, Car>> getCars () {
+        return cars.entrySet();
+    }
+    
+    /**
+     * Get all workers
+     */
+    public Collection<Map.Entry<Integer, Worker>> getWorkers () {
+        return workers.entrySet();
+    }
+    
+    /**
+     * Get all car owners
+     */
+    public Collection<Map.Entry<Integer, Person>> getOwners () {
+        return owners.entrySet();
+    }
+    
+    /**
+     * Get all service actions
+     */
+    public Collection<Map.Entry<Integer, ServiceAction>> getServiceActions () {
+        return serviceActions.entrySet();
+    }
+    
+    /**
+     * Get service actions with status
+     */
+    public Collection<Map.Entry<Integer, ServiceAction>> getServiceActions (ServiceStatus status) {
+        List<Map.Entry<Integer, ServiceAction>> result = new LinkedList<>();
+        serviceActions.entrySet().stream()
+                .filter((kvpair)-> kvpair.getValue().status == status)
+                .forEach((kvpair)-> result.add(kvpair));
         return result;
     }
 }
