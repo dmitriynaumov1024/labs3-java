@@ -56,11 +56,12 @@ public class ServiceAction implements java.io.Serializable {
     
     @Override public String toString () {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Apply date      : %s\n", DateFormats.yyyy_mm_dd().format(this.applyDate)));
-        sb.append(String.format("Car id          : %s\n", this.carId));
-        sb.append(String.format("Worker          : %s %s\n", this.worker.name, this.worker.surname));
-        sb.append(String.format("Service variant : %s\n", this.variant));
-        
+        sb.append(String.format("Apply date       : %s\n", DateFormats.yyyy_mm_dd().format(this.applyDate)));
+        sb.append(String.format("Car id           : %s\n", this.carId));
+        sb.append(String.format("Worker           : %s %s\n", this.worker.name, this.worker.surname));
+        sb.append(String.format("Service variant  : %s\n", this.variant));
+        sb.append(String.format("Service status   : %s\n", this.status));
+        sb.append(String.format("Additional notes : %s", this.notes));
         return sb.toString();
     }
 }
