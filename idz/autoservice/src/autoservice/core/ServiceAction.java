@@ -4,39 +4,111 @@ import java.util.*;
 import autoservice.util.*;
 
 /**
- *
+ * Represents service action
  * @author Dmitriy Naumov
  */
 public class ServiceAction implements java.io.Serializable {
+    
+    protected transient AutoServiceBackend backend;
+    
     public Date applyDate;
-    public Car car;
-    public Worker worker;
     public ServiceVariant variant;
-    public List<Several<CarPart>> servicedParts;
-    public List<Several<CarPart>> newParts;
     public Date serviceStartTime;
     public Date serviceEndTime;
     public ServiceStatus status;
     public String notes;
     
-    public int workerId;
-    public int carId;
+    private Integer workerId;
+    private Integer carId;
+    private List<Several<Integer>> actionIds;
+    private List<Several<Integer>> newPartIds;
     
-    public ServiceAction () {
+    public ServiceAction (AutoServiceBackend backend) {
         this.applyDate = new Date();
         this.status = ServiceStatus.Planned;
+        this.actionIds = new LinkedList<>();
+        this.newPartIds = new LinkedList<>();
+        this.backend = backend;
+    }
+    
+    public Car getCar () {
+        return backend.getCars().get(carId);
+    }
+    
+    public Worker getWorker () {
+        return backend.getWorkers().get(workerId);
+    }
+    
+    public int getCarId () {
+        return this.carId;
+    }
+    
+    public int getWorkerId () {
+        return this.workerId;
+    }
+    
+    public void setCarId (int id) {
+        if (backend.getCars().containsKey(id)) 
+            this.carId = id;
+        else 
+            throw new IllegalArgumentException (String.format("Backend has no Car with id %d", id));
+    }
+    
+    public void setWorkerId (int id) {
+        if (backend.getWorkers().containsKey(id))
+            this.workerId = id;
+        else 
+            throw new IllegalArgumentException (String.format("Backend has no Worker with id %d", id));
+    }
+    
+    public void addNewPartId (int count, int id) {
+        if (count < 1)
+            throw new IllegalArgumentException (String.format("Count should be greater than 0, but found %d", count));
+        if (!backend.getCarParts().containsKey(id))
+            throw new IllegalArgumentException (String.format("Backend has no CarPart with id %d", id));
+        this.newPartIds.add(new Several<>(count, id));
+    }
+    
+    public void addActionId (int count, int id) {
+        if (count < 1)
+            throw new IllegalArgumentException (String.format("Count should be greater than 0, but found %d", count));
+        if (!backend.getCarActions().containsKey(id))
+            throw new IllegalArgumentException (String.format("Backend has no CarAction with id %d", id));
+        this.actionIds.add(new Several<>(count, id));
+    }
+    
+    public List<Several<CarAction>> getActions () {
+        List<Several<CarAction>> result = new LinkedList<>();
+        for (Several<Integer> a : actionIds) 
+            result.add(new Several<>(a.count, backend.getCarActions().get(a.value)));
+        return result;
+    }
+    
+    public List<Several<CarPart>> getNewParts () {
+        List<Several<CarPart>> result = new LinkedList<>();
+        for (Several<Integer> a : newPartIds) 
+            result.add(new Several<>(a.count, backend.getCarParts().get(a.value)));
+        return result;
+    }
+    
+    public int getPartCount () {
+        return this.newPartIds.size();
+    }
+    
+    public int getActionCount () {
+        return this.actionIds.size();
     }
     
     public int getPrice () {
         int result = 0;
         
-        if (newParts != null) for (Several<CarPart> itemStack : newParts) {
-            result += itemStack.count * itemStack.value.price;
+        if (newPartIds != null) for (Several<Integer> item : newPartIds) {
+            result += item.count * backend.getCarParts().get(item.value).price;
         }
-        if (servicedParts != null) for (Several<CarPart> itemStack : servicedParts) {
-            result += itemStack.count * itemStack.value.price / 5;
+        if (actionIds != null) for (Several<Integer> action : actionIds) {
+            result += action.count * backend.getCarActions().get(action.value).price;
         }
-        return result + ((worker == null)? 0 : getWorkHours() * worker.hourSalary);
+        return result + ((workerId == null)? 0 : getWorkHours() * backend.getWorkers().get(workerId).hourSalary);
     }
     
     public void startService () {
@@ -51,17 +123,6 @@ public class ServiceAction implements java.io.Serializable {
     
     public int getWorkHours () {
         if (serviceEndTime == null || serviceStartTime == null) return 0;
-        return (int) Math.ceil(serviceEndTime.getTime() - serviceStartTime.getTime() / 3_600_000);
-    }
-    
-    @Override public String toString () {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Apply date       : %s\n", DateFormats.yyyy_mm_dd().format(this.applyDate)));
-        sb.append(String.format("Car id           : %s\n", this.carId));
-        sb.append(String.format("Worker           : %s %s\n", this.worker.name, this.worker.surname));
-        sb.append(String.format("Service variant  : %s\n", this.variant));
-        sb.append(String.format("Service status   : %s\n", this.status));
-        sb.append(String.format("Additional notes : %s", this.notes));
-        return sb.toString();
+        return (int) Math.ceil((double)(serviceEndTime.getTime() - serviceStartTime.getTime()) / 3600000.0);
     }
 }
